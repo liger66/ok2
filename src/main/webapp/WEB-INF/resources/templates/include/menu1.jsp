@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body {margin:0;font-family:Arial}
-
 .topnav {
   overflow: hidden;
   background-color: #333;
@@ -18,7 +14,7 @@ body {margin:0;font-family:Arial}
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .active {
@@ -36,7 +32,7 @@ body {margin:0;font-family:Arial}
 }
 
 .dropdown .dropbtn {
-    font-size: 17px;    
+    font-size: 16px;    
     border: none;
     outline: none;
     color: white;
@@ -110,8 +106,6 @@ body {margin:0;font-family:Arial}
 }
 
 </style>
-</head>
-<body>
 
 <div class="topnav" id="myTopnav">
   <a href="#home" class="active">Home</a>
@@ -221,6 +215,3 @@ function myFunction() {
     }
 }
 </script>
-
-</body>
-</html>
