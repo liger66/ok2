@@ -3,7 +3,7 @@ package com.tiger.vo;
 public class Tuser {
 	
 	private String userCd, name, pass, telNo, brand, giYY, season,	designerYN,	
-		   logisticYN,	salesYN, shopYN, shop,	outYN,	outDt,	inUser,	inDate;
+		   logisticYN,	salesYN, shopYN, shop, image, outYN, outDt,	inUser,	inDate;
 
 	public String getUserCd() {
 		return userCd;
@@ -131,6 +131,14 @@ public class Tuser {
 
 	public void setInDate(String inDate) {
 		this.inDate = inDate;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}	
 
 }

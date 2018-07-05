@@ -23,7 +23,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">기초정보 관리 <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#">사용자 정보 등록</a></li>
-          <li><a href="#">공통코드 등록</a></li>
+          <li><a href="/code">공통코드 등록</a></li>
           <li><a href="#">품종정보 등록</a></li>
           <li><a href="#">사업자정보 등록</a></li>
           <li><a href="#">매장 정보 등록</a></li>

@@ -11,9 +11,10 @@ public class TuserDao {
 		this.session = session;
 	}
 
-	public Tuser selectOne(String id) {
-		System.out.println("cc----------------------------------");
+	public Tuser selectOne(String id) {	
+		
 		Tuser tuser = session.selectOne("tuser.selectOne", id);
+		
 		return tuser;
 	}
 	

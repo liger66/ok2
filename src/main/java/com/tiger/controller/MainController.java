@@ -3,7 +3,6 @@ package com.tiger.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -19,23 +18,35 @@ public class MainController {
 	public void setTuserService (TuserService tuserService) {
 		this.tuserservice = tuserService;
 	}
+	@RequestMapping("/main")
+	public String main() {
+		return "/main.jsp";
+	}
+	
+	@RequestMapping("/code")
+	public String code() {
+		return "/code.jsp";
+	}
 	
 	@RequestMapping("/login")
 	public String login() {
 		return "/login.jsp";
 	}
 	
-	@RequestMapping("/loginin")
+	@RequestMapping("/login/in")
 	public String loginin(@RequestParam(required=false) String id, 
 						  @RequestParam(required=false) String pass, HttpServletRequest request) {
 		
 		Map<String, Object>  resultMap = new HashMap<>();
-		System.out.println("aa----------------------------------");
 		resultMap = tuserservice.selectOne(id, pass);
-		System.out.println("bb----------------------------------");
-		if (resultMap.get("errorYN").equals("N") ) {
-			return "/login.jsp";
+		
+		if (resultMap.get("errorYN").equals("Y") ) {
+			System.out.println("aa----------------------------");
+			request.setAttribute("errorYN", "Y");
+			request.setAttribute("msg", resultMap.get("msg"));
+			return "redirect:/login";
 		}
+		System.out.println("bb----------------------------");
 		request.getSession().setAttribute("tuser", resultMap.get("tuser"));
 		
 		return "/main.jsp";
@@ -54,15 +65,5 @@ public class MainController {
 	@RequestMapping("/hello3")
 	public String hello3() {
 		return "/hello3.jsp";
-	}
-	
-	@RequestMapping("/menu1")
-	public String menu1() {
-		return "/menu1.jsp";
-	}
-	
-	@RequestMapping("/menu2")
-	public String menu2() {
-		return "/menu2.jsp";
 	}
 }

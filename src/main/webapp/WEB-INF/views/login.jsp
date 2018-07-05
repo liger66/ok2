@@ -42,6 +42,10 @@ function check (f) {
 	var pass = $("#pass").val();
 
 	f.submit();
+	
+	if ('${errorYN}' == 'Y') {
+		alert('${msg}');
+	}
 }
 </script>
 
@@ -52,7 +56,7 @@ function check (f) {
 			<h2 class="text-center">환 영  합 니 다. ^^</h2>
 		</div>
 
-		<form action="${pageContext.request.contextPath}/loginin" method="post">
+		<form action="${pageContext.request.contextPath}/login/in" method="post">
 		<div class="body">
 			<div class="form-group text-right">
 				<label class="col-sm-offset-2 col-xs-3 control-label" for="id">아이디</label>

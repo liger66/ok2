@@ -13,16 +13,9 @@
 		<property name="tuserService" ref="tuserService"/>
 	</bean>
 	
-	<bean id="tuserService" class="com.tiger.service.TuserServiceImpl">
-		<property name="tuserDao" ref="tuserDao"/>
-	</bean>
-	
-	<bean id="tuserDao" class="com.tiger.dao.TuserDao">
-		<property name="sqlSession" ref="sqlSession"/>
-	</bean>
-	
 	<mvc:annotation-driven/>
-	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" /> 
+	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+	<mvc:resources mapping="/sysimg/**" location="/WEB-INF/resources/sysimg/" /> 
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views"/>
 </beans>

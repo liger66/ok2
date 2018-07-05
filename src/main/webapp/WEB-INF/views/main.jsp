@@ -12,20 +12,20 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<div class="container">
- <div class="col-sm-8">
- 	<h3 class="title text-center">공통 코드 등록</h3>	
- </div>
- <div class="col-sm-4">
- 	<button type="button" class="btn">초기화</button>
- 	<button type="button" class="btn btn-primary">조회</button>
- 	<button type="button" class="btn btn-info">신규</button>
- 	<button type="button" class="btn btn-success" disabled="disabled">저장</button>
- 	<button type="button" class="btn btn-danger" disabled="disabled">삭제</button>
- </div>
-  
-</div>
+
 <body>
-	hello projectsaaa
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-11">
+				<img src="/sysimg/main1.jpg" class="img-responsive img-rounded"/>
+			</div>
+		<!-- 	<div class="col-xs-4">
+				<img src="/sysimg/main2.jpg" class="img-responsive img-circle"/>
+			</div>
+			<div class="col-xs-4">
+				<img src="/sysimg/main3.jpg" class="img-responsive img-thumbnail"/>
+			</div>  -->
+		</div>
+	</div>
 </body>
 </html>
