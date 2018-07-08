@@ -18,6 +18,7 @@ public class MainController {
 	public void setTuserService (TuserService tuserService) {
 		this.tuserservice = tuserService;
 	}
+	
 	@RequestMapping("/main")
 	public String main() {
 		return "/main.jsp";
@@ -41,12 +42,11 @@ public class MainController {
 		resultMap = tuserservice.selectOne(id, pass);
 		
 		if (resultMap.get("errorYN").equals("Y") ) {
-			System.out.println("aa----------------------------");
 			request.setAttribute("errorYN", "Y");
 			request.setAttribute("msg", resultMap.get("msg"));
 			return "redirect:/login";
 		}
-		System.out.println("bb----------------------------");
+		
 		request.getSession().setAttribute("tuser", resultMap.get("tuser"));
 		
 		return "/main.jsp";

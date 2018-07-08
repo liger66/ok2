@@ -1,0 +1,81 @@
+ipgo (	id
+	jepum
+	sengCd
+	recDt
+	junNo
+	chang
+	loc
+	banYN
+	delYN
+	delDt
+	inUser
+	inDate
+
+ipgoDetl (	id
+	mid
+	jepum
+	color
+	siz
+	recDt
+	qty
+	dan
+	chang
+	loc
+	banYN
+	delYN
+	delDt
+	inUser
+	inDate
+
+idong (	id
+	jepum
+	chulChang
+	ipgoChang
+	recDt
+	junNo
+	memo
+	delYN
+	delDt
+	inUser
+	inDate
+
+idongDetl (	id
+	mid
+	jepum
+	color
+	siz
+	recDt
+	qty
+	chulChang
+	chulLoc
+	ipgoChang
+	ipgoLoc
+	delYN
+	delDt
+	inUser
+	inDate
+
+jojung (	id
+	jepum
+	chang
+	recDt
+	junNo
+	memo
+	delYN
+	delDt
+	inUser
+	inDate
+
+jojungDetl (	id
+	mid
+	jepum
+	color
+	siz
+	recDt
+	qty
+	wsCd
+	loc
+	delYN
+	delDt
+	inUser
+	inDate

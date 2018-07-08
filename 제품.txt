@@ -1,0 +1,89 @@
+jepum  (	jepum
+	brand
+	giYY
+	season
+	pum
+	jepumGb
+	majinGb
+	giGb
+	saipPanYN
+	jepumNm
+	giWonjaje
+	giBujaje
+	giImbong
+	giSobi
+	wonjaje
+	bujaje
+	imbong
+	won
+	sobi
+	fixDt
+	sojeGb
+	priceGb
+	sengHt
+	giQty
+	giIpgoDt
+	fIpgoDt
+	lIpgoDt
+	giPanDt
+	fPanDt
+	lPanDt
+	image
+	sizGroup
+	inUser
+	inDate
+
+jepumColor (	jepum
+	color
+	image
+	inUser
+	inDate
+
+jepumSiz (	jepum
+	color
+	siz
+	giQty
+	ipgoQty
+	sengQty
+	inUser
+	inDate
+
+sengJisi (	jepum
+	sengCha
+	sengCd
+	sengQty
+	ipgoQty
+	baljuDt
+	ipgoYDt
+	napgiDt
+	dan
+	inUser
+	inDate
+
+jepumHalin (	id
+	jepum
+	fromDt
+	toDt
+	halin
+	inUser
+	inDate
+
+shopHalin (	id
+	storeCd
+	jepum
+	fromDt
+	toDt
+	halin
+	inUser
+	inDate
+
+jepumFix (	id
+	jepum
+	fixDt
+	wonjaje
+	bujaje
+	imbong
+	won
+	sobi
+	inUser
+	inDate

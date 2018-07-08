@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lGroupCd">
+	<select id="selectList" resultType="lGroupCd" parameterType="String">
+		select * from lgroupcd where gubuncd = #{gubuncd} order by orderby
+	</select>
+	
+	<select id="selectOne" resultType="lGroupCd" parameterType="lGroupCd">
+		select * from lgroupcd where gubuncd = #{gubuncd} and lgroupcd = #{lgroupcd}
+	</select>
+	
+	<insert id="insert" parameterType="lGroupCd">
+		insert into lgroupcd values 
+		 (#{gubunCd}, #{lGroupCd}, #{lGroupNm}, #{useYN}, #{memo}, #{orderBy}, #{inUser}, sysdate)
+	</insert>
+</mapper>
+

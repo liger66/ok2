@@ -15,16 +15,16 @@
 <script type="text/javascript">
 function snew(){
 	$("#btn_store").attr('disabled', false);
-	$("#gbCode").val("");
+	$("#gubuncd").val("");
 	$("#gbName").val("");
 }
 
-function store() {
-	var gbCode = $("#gbCode").val();
+function insert() {
+	var gubuncd = $("#gubuncd").val();
 	var gbName = $("#gbName").val();
-	if(gbCode == ""){
+	if(gubuncd == ""){
 		alert("구분코드를 입력해 주세요");
-		$("#gbCode").focus();
+		$("#gubuncd").focus();
 		return;
 	}
 	if(gbName == ""){
@@ -33,8 +33,89 @@ function store() {
 		return;
 	}
 	
-	f.submit();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/checkcode",
+		type:"POST",
+		data:{gubuncd:gubuncd},
+		success:function(data){
+			if (data == "Y") {
+				alert("이미 등록된 코드 구분 입니다.");
+				$("#gubuncd").focus();
+				return;
+			}else{
+				document.getElementById("gbForm").submit();
+				//$("#gbForm").submit();
+			}			
+		}
+	});	
 }
+
+function insertLGroup() {
+	var gubuncd = $("#hgubuncd").val();
+	
+	var lGroupCd = $("#lGroupCd").val();
+	var lGroupNm = $("#lGroupNm").val();
+	var lOrderBy = $("#lOrderBy").val();
+	
+	if (lGroupCd == "" || lGroupNm == "" || lOrderBy == "") {
+		alert("입력 항목을 채워 주세요.");
+		$("#lGroupCd").focus();
+		return;
+	}
+	
+	alert(gubuncd + " : " + lGroupCd + " : " + lGroupNm + " : " + lOrderBy);
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/insertLGroup",
+		type:"POST",
+		data:{gubunCd:gubunCd, lGroupCd:lGroupCd, lGroupNm:lGroupNm, lOrderBy:lOrderBy},
+		success:function(data){
+			if (data == "Y") {
+				alert("중복된 코드가 있습니다.");
+				return;
+			}		
+		},
+		error:function() {
+			alert ("error : ------------------------------------------");
+		}
+	});	
+}
+
+function inquiry() {
+	$("#btn_store").attr('disabled', true);
+	location.href="${pageContext.request.contextPath}/code/gbList";
+}
+
+function selectGubunCd() {
+	$("#btn_lGroup").attr('disabled', false);
+	
+	var gubuncd = $("#agubuncd").text();
+	alert(" selected gubuncd : "  + gubuncd);
+	
+	$("#hgubuncd").val(gubuncd);
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/lGroupList",
+		type:"POST",
+		data:{gubuncd:gubuncd}, 
+		success:function(data){
+			for (var i = 0; i < data.length; i++) {
+				var tx = "<tr > <td> ";
+				tx += "<a href='#' onclick='selectLGroup(); return false;' id='aLGroupCd'>";
+				tx += data[i].lGroupCd + "</a> </td>";
+				
+				tx += "<td>" + data[i].lGroupNm + "</td>";
+				tx += "<td>" + data[i].orderBy + "</td> </tr>";
+				
+				$("#lGroup").append(tx);
+			}
+		},
+		error:function() {
+			alert ("error : ------------------------------------------");
+		}
+	});	
+}
+
 </script>
 
 <body>
@@ -44,10 +125,11 @@ function store() {
  </div>
  <div class="col-sm-4">
  	<button type="button" id="btn_init" class="btn">초기화</button>
- 	<button type="button" id="btn_serch" class="btn btn-primary">조회</button>
+ 	<button type="button" id="btn_serch" class="btn btn-primary" 
+ 			onclick="inquiry()">조회</button>
  	<button type="button" id="btn_new" class="btn btn-info" onclick="snew()">신규</button>
  	<button type="button" id="btn_store" class="btn btn-success" disabled="disabled"
- 			onclick="store()" >저장</button>
+ 			onclick="insert()" >저장</button>
  	<button type="button" id="btn_delete" class="btn btn-danger" disabled="disabled">삭제</button>
  </div>
 </div>
@@ -55,10 +137,10 @@ function store() {
 <hr/>
  
 <div class="container">
-  <form class="form-inline" action="${pageContext.request.contextPath}/code/insertGb" method="post">    
+  <form id="gbForm" class="form-inline" action="${pageContext.request.contextPath}/code/insertGb" method="post">    
       <div class="input-group col-sm-2">    
         <span class="input-group-addon">구분코드</span>
-        <input id="gbCode" type="text" class="form-control" name="gbCode" >
+        <input id="gubuncd" type="text" class="form-control" name="gubuncd" >
       </div>      
       <div class="input-group col-sm-1"></div>
       
@@ -80,10 +162,10 @@ function store() {
       </tr>
     </thead>
     <tbody>
-    	<c:forEach var="bvo" items="${codegbList }">
-	      <tr>
-	        <td>${bvo.code }</td>
-	        <td>${bvo.name }</td>
+    	<c:forEach var="gb" items="${codeGbList }">
+	      <tr>	      	 
+	      	<td> <a href="#" onclick="selectGubunCd(); return false;" id="agubuncd">${gb.gubunCd}</a> </td>
+	      	<td>${gb.gubunNm }</td>
 	      </tr>
 	    </c:forEach>
     </tbody>
@@ -92,68 +174,63 @@ function store() {
   
   <div class="form-group col-sm-5">
   	<h4 class="text-center col-sm-10">대 분류</h4>
-  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled">저장</button>
+  	<input type="hidden" id="hgubuncd">  	
+  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled" id="btn_lGroup"
+  			onclick="insertLGroup()">저장</button>
   <table class="table table-bordered">
     <thead>
       <tr>
         <th class="text-center col-sm-3">코드</th>
         <th class="text-center col-sm-7">명칭</th>
-        <th class="text-center col-sm-1">Y/N</th>
-        <th class="text-center col-sm-1">Sort</th>
+        <th class="text-center col-sm-2">Sort</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>y</td>
-        <td>11</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>y</td>
-        <td>12</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>y</td>
-        <td>13</td>
-      </tr>
+    <tbody id="lGroup">
+	    <tr>
+	        <td><input class="form-control" id="lGroupCd" style="height:25px" name="lGroupCd" ></td>
+	        <td><input class="form-control" id="lGroupNm" style="height:25px" name="lGroupNm" ></td>
+	        <td><input class="form-control" id="lOrderBy" style="height:25px" name="lOrderBy" ></td>
+	    </tr>
+	  	
+	  	<!-- 
+	    <c:forEach begin="0" varStatus="status" end="4">
+	    	<tr>
+		        <td><input class="form-control" id="lGroupCd" style="height:25px" name="lGroupCd" ></td>
+		        <td><input class="form-control" id="lGroupNm" style="height:25px" name="lGroupNm" ></td>
+		        <td><input class="form-control" id="lOrderBy" style="height:25px" name="lOrderBy" ></td>
+		    </tr>
+	    </c:forEach>
+        -->
     </tbody>
   </table>
   </div> 
   
   <div class="form-group col-sm-4">
   	<h4 class="text-center col-sm-10">중 분류</h4>
-  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled">저장</button>
+  	<input type="hidden" id="hLGroupCd">
+  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled" id="btn_mGroup">저장</button>
   <table class="table table-bordered">
     <thead>
       <tr>
         <th class="text-center col-sm-3">코드</th>
         <th class="text-center col-sm-7">명칭</th>
-        <th class="text-center col-sm-1">Y/N</th>
-        <th class="text-center col-sm-1">Sort</th>
-      </tr>
+        <th class="text-center col-sm-2">Sort</th>
+      </tr>      
     </thead>
     <tbody>
       <tr>
         <td>John</td>
         <td>Doe</td>
-        <td>y</td>
         <td>11</td>
       </tr>
       <tr>
         <td>Mary</td>
         <td>Moe</td>
-        <td>y</td>
         <td>12</td>
       </tr>
       <tr>
         <td>July</td>
         <td>Dooley</td>
-        <td>y</td>
         <td>13</td>
       </tr>
     </tbody>

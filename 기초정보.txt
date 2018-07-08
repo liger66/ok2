@@ -1,0 +1,74 @@
+codegb (	gubunCd
+	gubunNm
+
+
+lGroupCd (	gubunCd
+	lGroupCd
+	lGroupNm
+	useYN
+	memo
+	orderBy
+	inUser
+	inDate
+
+
+
+mGroupCd (	gubunCd
+	lGroupCd
+	mGroupCd
+	mGroupNm
+	useYn
+	memo
+	orderBy
+	inUser
+	inDate
+
+tuser (	userCd
+	name
+	pass
+	telNo
+	brand
+	giYY
+	season
+	designerYN
+	logisticYN
+	salesYN
+	shopYN
+	shop
+	outYN
+	outDt
+	inUser
+	inDate
+
+magam (	brand
+	YYMM
+	ipgoMaYN
+	ipgoMaDt
+	chulMaYN
+	chulMaDt
+	panMaYN
+	panMaDt
+	inUser
+	inDate
+
+location (	locCd
+	lgroupCd
+	mgroupCd
+	memo
+	orderBy
+	inUser
+	inDate
+
+pumjong (	brand
+	pumCd
+	pumNm
+	sizeGroupCd
+	orderBy
+
+baebun (	baebGroupCd
+	baebGradeCd
+	sizGroupCd
+	siz
+	qty
+	inUser
+	inDate

@@ -6,14 +6,27 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-	<context:property-placeholder 
-		location="classpath:mybatis/config/db.properties"/>
+	<context:property-placeholder location="classpath:mybatis/config/db.properties"/>
 	
 	<bean id="tuserService" class="com.tiger.service.TuserServiceImpl">
 		<property name="tuserDao" ref="tuserDao"/>
+	</bean>	
+	<bean id="tuserDao" class="com.tiger.dao.TuserDao">
+		<property name="session" ref="session"/>
 	</bean>
 	
-	<bean id="tuserDao" class="com.tiger.dao.TuserDao">
+	<bean id="codeService" class="com.tiger.service.CodeServiceImpl">
+		<property name="codeGbDao" ref="codeGbDao"/>
+		<property name="lGroupCdDao" ref="lGroupCdDao"/>
+		<property name="mGroupCdDao" ref="mGroupCdDao"/>
+	</bean>	
+	<bean id="codeGbDao" class="com.tiger.dao.CodeGbDao">
+		<property name="session" ref="session"/>
+	</bean>
+	<bean id="lGroupCdDao" class="com.tiger.dao.LGroupCdDao">
+		<property name="session" ref="session"/>
+	</bean>
+	<bean id="mGroupCdDao" class="com.tiger.dao.MGroupCdDao">
 		<property name="session" ref="session"/>
 	</bean>	
 	

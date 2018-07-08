@@ -1,0 +1,56 @@
+saupja (	saupNo
+	saupGb
+	saupNm
+	juso
+	upjong
+	uptae
+	telNo
+	faxNo
+	daepNm
+	daepTelNo
+	silmuNm
+	silmuTelNo
+	sengYN
+	shopYN
+	closeYN
+	dealYN
+	inUser
+	inDate
+
+
+seng (	sengCd
+	saupNo
+	pass
+	sengNm
+	silmuNm
+	silmuTelNo
+	inUser
+	inDate
+
+
+shop (	shop
+	saupNo
+	pass
+	shopNm
+	jikYN
+	sangYN
+	jiyuk
+	shopGrade
+	baebGrade
+	silmuNm
+	silmuTelNo
+	saleNm
+	chulYN
+	closeYN
+	inUser
+	inDate
+
+
+shopMajin (	shop
+	YYMM
+	majinGb
+	fHailin
+	tHalin
+	majin
+	inUser
+	inDate
