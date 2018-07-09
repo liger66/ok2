@@ -1,0 +1,108 @@
+@charset "UTF-8";
+*{margin:0}
+
+.text-c {text-align: center;}
+.text-l {text-align: left;}
+.title{
+	text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+	color: rgba(0,0,255,0.7);
+	font-weight: bold;
+	font-size: 25pt;
+	margin:0 auto;
+}
+.table-fix {
+  border-collapse: collapse;  
+  height: 500px;
+  overflow-y:auto;
+}
+.table-fix tfoot{
+  
+  table-layout: fixed;
+}
+
+
+
+.header{
+	padding: 30px;
+}
+
+.board-list{
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.board-list th, .board-list td{
+	text-align: center;
+	padding: 20px;	
+}
+
+.board-list tr:nth-child(2n) td {
+	background: rgba(9,9,9,0.1);
+}
+
+.board-list th{
+	border-top: 1px solid rgba(0,0,0,0.3);
+	border-bottom: 2px solid rgba(0,0,0,0.7);
+}
+
+.board-list a{
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+.board-list a:hover{
+	font-size: 13pt;
+}
+
+
+.board-view{
+	width: 80%;
+	margin:0 auto;
+}
+
+.board-view th{
+	padding: 20px;
+	text-align: right;
+}
+
+.board-view td{
+	padding: 20px;
+	vertical-align: top;
+}
+
+.board-view textarea{
+	width: 100%;
+	height: 100%;
+}
+
+
+td.content{
+	height: 300px;
+	box-shadow: 2px 2px 2px gray;
+	background: #fcc;
+}
+
+.buttons{
+	padding: 20px;	
+	text-align: right;
+}
+
+.paging{
+	font-size: 15pt;
+}
+
+.paging a{
+	text-decoration: none;
+	color: gray;
+}
+
+.search{
+	text-align: right;
+	padding: 20px;
+}
+
+.search input[type="text"]{
+	width: 100px;
+}

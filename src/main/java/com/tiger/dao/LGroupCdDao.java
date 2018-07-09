@@ -13,9 +13,9 @@ public class LGroupCdDao {
 		this.session = session;
 	}
 
-	public List<LGroupCd> selectList(String gubuncd) {
+	public List<LGroupCd> selectList(String gubunCd) {
 		
-		List<LGroupCd>  lGroupCdList = session.selectList("lGroupCd.selectList", gubuncd);
+		List<LGroupCd>  lGroupCdList = session.selectList("lGroupCd.selectList", gubunCd);
 		
 		return lGroupCdList;
 	}

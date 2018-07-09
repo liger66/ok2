@@ -20,6 +20,7 @@ import com.tiger.service.CodeService;
 import com.tiger.service.TuserService;
 import com.tiger.vo.CodeGb;
 import com.tiger.vo.LGroupCd;
+import com.tiger.vo.MGroupCd;
 import com.tiger.vo.Tuser;
 
 @Controller
@@ -32,24 +33,40 @@ public class CodeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/code/checkcode", method=RequestMethod.POST)
-	public String main(@RequestParam(required=false) String gbCode) {
-		String errorYN = codeService.checkCode(gbCode);
+	public String main(@RequestParam(required=false) String gubunCd) {
+		String errorYN = codeService.checkCode(gubunCd);
 		
 		return errorYN;
 	}
 	
 	@RequestMapping(value="/code/insertGb", method=RequestMethod.POST)
-	public String insertGb(@RequestParam(required=false) String gbCode, 
-						  @RequestParam(required=false) String gbName) {
-		codeService.insert(gbCode, gbName);
+	public String insertGb(@RequestParam(required=false) String gubunCd, 
+						   @RequestParam(required=false) String gubunNm) {
+		codeService.insert(gubunCd, gubunNm);
 		
 		return "redirect:/code/gbList";
 	}
 	
-	@RequestMapping(value="/code/gbList")
+	/*@RequestMapping(value="/code/gbList", method=RequestMethod.GET)
 	public String gbList(Model model) {
+		CodeGb codeGb = new CodeGb();
 		
-		List<CodeGb>  codeGbList = codeService.selectCodeGbList();
+		List<CodeGb>  codeGbList = codeService.selectCodeGbList(codeGb);
+		model.addAttribute("codeGbList", codeGbList);
+				
+		System.out.println("list length : " + codeGbList.size());
+		
+		return "/code.jsp";
+	}*/
+	
+	@RequestMapping(value="/code/gbList", method=RequestMethod.GET)
+	public String gbList(@RequestParam(required=false) String gubunCd, 
+			   			 @RequestParam(required=false) String gubunNm, Model model) {
+		CodeGb codeGb = new CodeGb();
+		codeGb.setGubunCd(gubunCd);
+		codeGb.setGubunNm(gubunNm);
+		
+		List<CodeGb>  codeGbList = codeService.selectCodeGbList(codeGb);
 		model.addAttribute("codeGbList", codeGbList);
 				
 		System.out.println("list length : " + codeGbList.size());
@@ -59,32 +76,45 @@ public class CodeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/code/lGroupList", method=RequestMethod.POST)
-	public List<LGroupCd> lGroupList(@RequestParam(required=false) String gubuncd, Model model) {
+	public List<LGroupCd> lGroupList(@RequestParam(required=false) String gubunCd, Model model) {
 		
-		List<LGroupCd>  lGroupCdList = codeService.selectLGroupCdList(gubuncd);
+		List<LGroupCd>  lGroupCdList = codeService.selectLGroupCdList(gubunCd);
 		
 		model.addAttribute("lGroupCdList", lGroupCdList);
-				
-		System.out.println("lGroupCdList size : " + lGroupCdList.size());
 		
-		return lGroupCdList;
+		return lGroupCdList;		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/code/mGroupList", method=RequestMethod.POST)
+	public List<MGroupCd> mGroupList(@RequestParam(required=false) String gubunCd,
+			@RequestParam(required=false) String lGroupCd, Model model) {
 		
+		List<MGroupCd>  mGroupCdList = codeService.selectMGroupCdList(gubunCd, lGroupCd);
+		
+		model.addAttribute("mGroupCdList", mGroupCdList);
+		
+		return mGroupCdList;		
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/code/insertLGroup", method=RequestMethod.POST)
-	public String insertLGroup(@RequestParam(required=false) String gubuncd, 
+	public String insertLGroup(@RequestParam(required=false) String gubunCd, 
 							   @RequestParam(required=false) String lGroupCd,
 							   @RequestParam(required=false) String lGroupNm,
 							   @RequestParam(required=false) String lOrderBy,
 							   HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("insertLGroup  --------- in ");
-		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");		
+		
+		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
+		if (tuser == null) {
+			System.out.println("no login ----------->");
+			return "Y";
+		}
 		String userCd = tuser.getUserCd();
 		
 		LGroupCd  lGroup = new LGroupCd();
 		
-		lGroup.setGubunCd(gubuncd);
+		lGroup.setGubunCd(gubunCd);
 		lGroup.setlGroupCd(lGroupCd);
 		lGroup.setlGroupNm(lGroupNm);
 		lGroup.setOrderBy(lOrderBy);
@@ -95,11 +125,49 @@ public class CodeController {
 		LGroupCd  lGroupOne = codeService.selectLGroupOne(lGroup);
 		
 		if (lGroupOne == null) {
-			System.out.println("---------------------------------- null");
 			codeService.insert(lGroup);
 			return "redirect:/code/gbList";
 		} else {
 			System.out.println("not null : " + lGroupOne.getGubunCd() + " -- " + lGroupOne.getlGroupCd());
+			return "Y";
+		}		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/code/insertMGroup", method=RequestMethod.POST)
+	public String insertMGroup(@RequestParam(required=false) String gubunCd, 
+							   @RequestParam(required=false) String lGroupCd,
+							   @RequestParam(required=false) String mGroupCd,
+							   @RequestParam(required=false) String mGroupNm,
+							   @RequestParam(required=false) String mOrderBy,
+							   HttpServletRequest request, HttpServletResponse response) {
+		
+		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
+		if (tuser == null) {
+			System.out.println("no login ----------->");
+			return "Y";
+		}
+		String userCd = tuser.getUserCd();
+		
+		MGroupCd  mGroup = new MGroupCd();
+		
+		mGroup.setGubunCd(gubunCd);
+		mGroup.setlGroupCd(lGroupCd);
+		mGroup.setmGroupCd(mGroupCd);
+		mGroup.setmGroupNm(mGroupNm);
+		mGroup.setOrderBy(mOrderBy);
+		mGroup.setInUser(userCd);
+		mGroup.setUseYN("Y");
+		mGroup.setMemo("");
+		
+		MGroupCd  mGroupOne = codeService.selectMGroupOne(mGroup);
+		
+		if (mGroupOne == null) {
+			System.out.println("---- null --> insert");
+			codeService.insert(mGroup);
+			return "redirect:/code/gbList";
+		} else {
+			System.out.println("not null : " + mGroupOne.getGubunCd() + " -- " + mGroupOne.getlGroupCd());
 			return "Y";
 		}
 		

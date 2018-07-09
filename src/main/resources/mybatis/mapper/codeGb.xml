@@ -4,15 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="codeGb">
 	<select id="selectOne" resultType="codeGb" parameterType="String">
-		select * from codegb where gubuncd = #{gubuncd}
+		select * from codegb where gubuncd = #{gubunCd}
 	</select>
 	
-	<select id="insert" parameterType="codeGb">
+	<insert id="insert" parameterType="codeGb">
 		insert into codegb values (#{gubunCd}, #{gubunNm})
-	</select>
+	</insert>
 	
-	<select id="selectList" resultType="codeGb">
-		select * from codegb
+	<select id="selectList" resultType="codeGb" parameterType="codeGb">
+		select * from codegb 
+			<if test="gubunCd != null and gubunNm != null">
+			    where gubuncd like '%'||#{gubunCd}||'%' and  gubunnm like '%'||#{gubunNm}||'%'
+			</if>
+			<if test="gubunCd != null and gubunNm == null">
+			    where gubuncd like '%'||#{gubunCd}||'%'
+			</if>
+			<if test="gubunCd == null and gubunNm != null">
+			    where gubunnm like '%'||#{gubunNm}||'%'
+			</if>
+		order by gubunCd
 	</select>
 </mapper>
 

@@ -13,17 +13,19 @@ public class CodeGbDao {
 		this.session = session;
 	}
 
-	public CodeGb selectOne(String gbCode) {
-		CodeGb codeGb = session.selectOne("codeGb.selectOne", gbCode);
+	public CodeGb selectOne(String gubunCd) {
+		CodeGb codeGb = session.selectOne("codeGb.selectOne", gubunCd);
 		return codeGb;
 	}
 
 	public void insert(CodeGb codeGb) {
-		session.insert("codeGb.insert",codeGb);		
+		System.out.println("gubunCd : " + codeGb.getGubunCd() + " " + codeGb.getGubunCd().length());
+		System.out.println("gubunNm : " + codeGb.getGubunNm() + " " + codeGb.getGubunNm().length());
+		session.insert("codeGb.insert", codeGb);
 	}
 
-	public List<CodeGb> selectList() {
-		List<CodeGb> codeGbList = session.selectList("codeGb.selectList");
+	public List<CodeGb> selectList(CodeGb codeGb) {
+		List<CodeGb> codeGbList = session.selectList("codeGb.selectList", codeGb);
 		return codeGbList;
 	}	
 }

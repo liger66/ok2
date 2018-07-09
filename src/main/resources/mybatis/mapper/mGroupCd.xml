@@ -4,7 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mGroupCd">
 	<select id="selectList" resultType="mGroupCd" parameterType="mGroupCd">
-		select * from mgroupcd where gubuncd = #{gubuncd} and lGroupCd = #{lgroupcd}
+		select * from mgroupcd where gubuncd = #{gubunCd} and lGroupCd = #{lGroupCd} order by orderby
+	</select>
+	
+	<select id="selectOne" resultType="mGroupCd" parameterType="mGroupCd">
+		select * from mgroupcd where gubuncd = #{gubunCd} 
+				and lgroupcd = #{lGroupCd} and mgroupcd = #{mGroupCd}
 	</select>
 	
 	<insert id="insert" parameterType="mGroupCd">

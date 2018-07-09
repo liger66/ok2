@@ -8,6 +8,7 @@ import com.tiger.dao.MGroupCdDao;
 import com.tiger.dao.TuserDao;
 import com.tiger.vo.CodeGb;
 import com.tiger.vo.LGroupCd;
+import com.tiger.vo.MGroupCd;
 
 public class CodeServiceImpl implements CodeService {
 	private CodeGbDao codeGbDao;	
@@ -26,17 +27,17 @@ public class CodeServiceImpl implements CodeService {
 	}
 
 	@Override
-	public void insert(String gbCode, String gbName) {
+	public void insert(String gubunCd, String gubunNm) {
 		CodeGb codeGb = new CodeGb();		
-		codeGb.setGubunCd(gbCode);
-		codeGb.setGubunNm(gbName);
+		codeGb.setGubunCd(gubunCd);
+		codeGb.setGubunNm(gubunNm);
 		
-		codeGbDao.insert(codeGb);		
+		codeGbDao.insert(codeGb);	
 	}
 
 	@Override
-	public String checkCode(String gubuncd) {
-		CodeGb  codeGb = codeGbDao.selectOne (gubuncd);		
+	public String checkCode(String gubunCd) {
+		CodeGb  codeGb = codeGbDao.selectOne (gubunCd);		
 		String errorYN = "N";		
 		if (codeGb != null) {
 			errorYN = "Y";
@@ -45,15 +46,15 @@ public class CodeServiceImpl implements CodeService {
 	}
 
 	@Override
-	public List<CodeGb> selectCodeGbList() {
-		List<CodeGb> codeGbList = codeGbDao.selectList();
+	public List<CodeGb> selectCodeGbList(CodeGb codeGb) {
+		List<CodeGb> codeGbList = codeGbDao.selectList(codeGb);
 		return codeGbList;
 	}
 
 	@Override
-	public List<LGroupCd> selectLGroupCdList(String gubuncd) {
+	public List<LGroupCd> selectLGroupCdList(String gubunCd) {
 		
-		List<LGroupCd> lGroupCdList = lGroupCdDao.selectList(gubuncd);
+		List<LGroupCd> lGroupCdList = lGroupCdDao.selectList(gubunCd);
 		
 		return lGroupCdList;
 	}
@@ -66,8 +67,38 @@ public class CodeServiceImpl implements CodeService {
 
 	@Override
 	public void insert(LGroupCd lGroup) {
-		lGroupCdDao.insert(lGroup);
+		lGroupCdDao.insert(lGroup);		
+	}
+
+	@Override
+	public List<MGroupCd> selectMGroupCdList(String gubunCd, String lGroupCd) {
+		MGroupCd mGroupCd = new MGroupCd();
 		
+		mGroupCd.setGubunCd(gubunCd);
+		mGroupCd.setlGroupCd(lGroupCd);
+		
+		List<MGroupCd> mGroupCdList = mGroupCdDao.selectList(mGroupCd);
+		
+		if (mGroupCdList.size() == 0) {
+			mGroupCd.setmGroupCd("XXX");
+			mGroupCd.setmGroupNm("No Data ... ^^");
+			mGroupCd.setOrderBy("00");
+			
+			mGroupCdList.add(mGroupCd);
+		}
+		
+		return mGroupCdList;
+	}
+
+	@Override
+	public MGroupCd selectMGroupOne(MGroupCd mGroup) {
+		MGroupCd mGroupCd = mGroupCdDao.selectOne(mGroup);
+		return mGroupCd;
+	}
+
+	@Override
+	public void insert(MGroupCd mGroup) {
+		mGroupCdDao.insert(mGroup);		
 	}
 
 }

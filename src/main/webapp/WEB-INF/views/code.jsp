@@ -8,6 +8,7 @@
   <title>Main Memu</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -15,43 +16,46 @@
 <script type="text/javascript">
 function snew(){
 	$("#btn_store").attr('disabled', false);
-	$("#gubuncd").val("");
-	$("#gbName").val("");
+	$("#gubunCd").val("");
+	$("#gubunNm").val("");
 }
 
 function insert() {
-	var gubuncd = $("#gubuncd").val();
-	var gbName = $("#gbName").val();
-	if(gubuncd == ""){
+	var gubunCd = $("#gubunCd").val();
+	var gubunNm = $("#gubunNm").val();
+	if(gubunCd == ""){
 		alert("구분코드를 입력해 주세요");
-		$("#gubuncd").focus();
+		$("#gubunCd").focus();
 		return;
 	}
-	if(gbName == ""){
+	if(gubunNm == ""){
 		alert("구분 명을 입력해 주세요");
-		$("#gbName").focus();
+		$("#gubunNm").focus();
 		return;
 	}
 	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/code/checkcode",
 		type:"POST",
-		data:{gubuncd:gubuncd},
+		data:{gubunCd:gubunCd},
 		success:function(data){
 			if (data == "Y") {
 				alert("이미 등록된 코드 구분 입니다.");
-				$("#gubuncd").focus();
+				$("#gubunCd").focus();
 				return;
 			}else{
 				document.getElementById("gbForm").submit();
 				//$("#gbForm").submit();
 			}			
+		},
+		error:function() {
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
 		}
 	});	
 }
 
 function insertLGroup() {
-	var gubuncd = $("#hgubuncd").val();
+	var gubunCd = $("#hgubunCd").val();
 	
 	var lGroupCd = $("#lGroupCd").val();
 	var lGroupNm = $("#lGroupNm").val();
@@ -63,7 +67,7 @@ function insertLGroup() {
 		return;
 	}
 	
-	alert(gubuncd + " : " + lGroupCd + " : " + lGroupNm + " : " + lOrderBy);
+	alert(gubunCd + " : " + lGroupCd + " : " + lGroupNm + " : " + lOrderBy);
 	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/code/insertLGroup",
@@ -76,46 +80,131 @@ function insertLGroup() {
 			}		
 		},
 		error:function() {
-			alert ("error : ------------------------------------------");
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
+		}
+	});	
+}
+
+function insertMGroup() {
+	var gubunCd = $("#hgubunCd").val();
+	var lGroupCd = $("#hLGroupCd").val();
+	
+	var mGroupCd = $("#mGroupCd").val();
+	var mGroupNm = $("#mGroupNm").val();
+	var mOrderBy = $("#mOrderBy").val();
+	
+	if (mGroupCd == "" || mGroupNm == "" || mOrderBy == "") {
+		alert("입력 항목을 채워 주세요.");
+		$("#mGroupCd").focus();
+		return;
+	}
+	
+	alert(gubunCd + " : " + lGroupCd + " : " + mGroupCd + " : " + mGroupNm);
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/insertMGroup",
+		type:"POST",
+		data:{gubunCd:gubunCd, lGroupCd:lGroupCd, mGroupCd:mGroupCd, mGroupNm:mGroupNm, mOrderBy:mOrderBy},
+		success:function(data){
+			if (data == "Y") {
+				alert("중복된 코드가 있습니다.");
+				return;
+			}		
+		},
+		error:function() {
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
 		}
 	});	
 }
 
 function inquiry() {
 	$("#btn_store").attr('disabled', true);
-	location.href="${pageContext.request.contextPath}/code/gbList";
+	var gubunCd = $("#gubunCd").val();
+	var gubunNm = $("#gubunNm").val();
+	/*
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/gbList",
+		type:"POST",
+		data:{gubunCd:gubunCd, gubunNm:gubunNm},
+		success:function(data){
+			console.log(data);
+		},
+		error:function() {
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
+		}
+	}); */
+	
+	location.href="${pageContext.request.contextPath}/code/gbList?gubunCd=" 
+	 			+ gubunCd + "&gubunNm=" + gubunNm;
+
 }
 
-function selectGubunCd() {
+function selectgubunCd(a) {
 	$("#btn_lGroup").attr('disabled', false);
 	
-	var gubuncd = $("#agubuncd").text();
-	alert(" selected gubuncd : "  + gubuncd);
+	var gubunCd = $(a).text();
 	
-	$("#hgubuncd").val(gubuncd);
+	$("#hgubunCd").val(gubunCd);
+	$("#lGroupCd").val("");
+	$("#lGroupNm").val("");
+	$("#lOrderBy").val("");
 	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/code/lGroupList",
 		type:"POST",
-		data:{gubuncd:gubuncd}, 
+		data:{gubunCd:gubunCd},
 		success:function(data){
+			$("#lGroup").empty();
 			for (var i = 0; i < data.length; i++) {
-				var tx = "<tr > <td> ";
-				tx += "<a href='#' onclick='selectLGroup(); return false;' id='aLGroupCd'>";
+				var tx = "<tr class='text-c'> <td> ";
+				tx += "<a href='#' onclick='selectLGroup(this); return false;'>";
 				tx += data[i].lGroupCd + "</a> </td>";
 				
-				tx += "<td>" + data[i].lGroupNm + "</td>";
+				tx += "<td class='text-l'>" + data[i].lGroupNm + "</td>";
 				tx += "<td>" + data[i].orderBy + "</td> </tr>";
 				
 				$("#lGroup").append(tx);
 			}
 		},
 		error:function() {
-			alert ("error : ------------------------------------------");
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
 		}
 	});	
 }
 
+function selectLGroup(b) {
+	$("#btn_mGroup").attr('disabled', false);
+	
+	var gubunCd = $("#hgubunCd").val();
+	var lGroupCd = $(b).text();
+	alert ("lGroupCd : " + lGroupCd);
+	$("#hLGroupCd").val(lGroupCd);
+	
+	$("#mGroupCd").val("");
+	$("#mGroupNm").val("");
+	$("#mOrderBy").val("");
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/code/mGroupList",
+		type:"POST",
+		data:{gubunCd:gubunCd, lGroupCd:lGroupCd},
+		success:function(data){
+			$("#mGroup").empty();
+			for (var i = 0; i < data.length; i++) {
+				var tx = "<tr class='text-c'> <td> ";
+				tx += data[i].mGroupCd + "</td>";
+				
+				tx += "<td class='text-l'>" + data[i].mGroupNm + "</td>";
+				tx += "<td>" + data[i].orderBy + "</td> </tr>";
+				
+				$("#mGroup").append(tx);
+			}
+		},
+		error:function() {
+			alert ("DB 작업중 에러, 시스템에 문의 하세요.");
+		}
+	});	
+}
 </script>
 
 <body>
@@ -140,41 +229,41 @@ function selectGubunCd() {
   <form id="gbForm" class="form-inline" action="${pageContext.request.contextPath}/code/insertGb" method="post">    
       <div class="input-group col-sm-2">    
         <span class="input-group-addon">구분코드</span>
-        <input id="gubuncd" type="text" class="form-control" name="gubuncd" >
+        <input id="gubunCd" type="text" class="form-control" name="gubunCd" >
       </div>      
       <div class="input-group col-sm-1"></div>
       
       <div class="input-group col-sm-5">    
         <span class="input-group-addon">구분 명</span>
-        <input id="gbName" type="text" class="form-control" name="gbName" >
+        <input id="gubunNm" type="text" class="form-control" name="gubunNm" >
       </div>
   </form>
   
   <hr />
   
-  <div class="form-group col-sm-3">
-  	<h4 class="text-center">구분 코드</h4>  	
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="text-center col-sm-3">코드</th>
-        <th class="text-center col-sm-9">명칭</th>
-      </tr>
-    </thead>
-    <tbody>
-    	<c:forEach var="gb" items="${codeGbList }">
-	      <tr>	      	 
-	      	<td> <a href="#" onclick="selectGubunCd(); return false;" id="agubuncd">${gb.gubunCd}</a> </td>
-	      	<td>${gb.gubunNm }</td>
+  <div class="form-group col-sm-3" >
+  	  <h4 class="text-center">구분 코드</h4>  	
+	  <table class="table table-bordered" >
+	    <thead>
+	      <tr>
+	        <th class="text-center col-sm-3">코드</th>
+	        <th class="text-center col-sm-9">명칭</th>
 	      </tr>
-	    </c:forEach>
-    </tbody>
-  </table>
+	    </thead>
+	    <tbody class="table-fix">
+	    	<c:forEach var="gb" items="${codeGbList }">
+		      <tr>	      	 
+		      	<td class="text-c"> <a href="#" onclick="selectgubunCd(this); return false;">${gb.gubunCd}</a> </td>
+		      	<td>${gb.gubunNm }</td>
+		      </tr>
+		    </c:forEach>
+	    </tbody>
+	  </table>
   </div> 
   
   <div class="form-group col-sm-5">
   	<h4 class="text-center col-sm-10">대 분류</h4>
-  	<input type="hidden" id="hgubuncd">  	
+  	<input type="hidden" id="hgubunCd">  	
   	<button type="button" class="btn btn-success col-sm-2" disabled="disabled" id="btn_lGroup"
   			onclick="insertLGroup()">저장</button>
   <table class="table table-bordered">
@@ -185,13 +274,7 @@ function selectGubunCd() {
         <th class="text-center col-sm-2">Sort</th>
       </tr>
     </thead>
-    <tbody id="lGroup">
-	    <tr>
-	        <td><input class="form-control" id="lGroupCd" style="height:25px" name="lGroupCd" ></td>
-	        <td><input class="form-control" id="lGroupNm" style="height:25px" name="lGroupNm" ></td>
-	        <td><input class="form-control" id="lOrderBy" style="height:25px" name="lOrderBy" ></td>
-	    </tr>
-	  	
+    <tbody>
 	  	<!-- 
 	    <c:forEach begin="0" varStatus="status" end="4">
 	    	<tr>
@@ -201,14 +284,23 @@ function selectGubunCd() {
 		    </tr>
 	    </c:forEach>
         -->
+        <tr>
+	        <td><input class="form-control" id="lGroupCd" style="height:25px" name="lGroupCd" ></td>
+	        <td><input class="form-control" id="lGroupNm" style="height:25px" name="lGroupNm" ></td>
+	        <td><input class="form-control" id="lOrderBy" style="height:25px" name="lOrderBy" ></td>
+	    </tr>
     </tbody>
+    <tfoot id="lGroup">
+    	
+    </tfoot>
   </table>
   </div> 
   
   <div class="form-group col-sm-4">
   	<h4 class="text-center col-sm-10">중 분류</h4>
   	<input type="hidden" id="hLGroupCd">
-  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled" id="btn_mGroup">저장</button>
+  	<button type="button" class="btn btn-success col-sm-2" disabled="disabled" id="btn_mGroup" 
+  			onclick="insertMGroup()">저장</button>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -218,22 +310,15 @@ function selectGubunCd() {
       </tr>      
     </thead>
     <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>11</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>12</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>13</td>
-      </tr>
+        <tr>
+	        <td><input class="form-control" id="mGroupCd" style="height:25px" name="mGroupCd" ></td>
+	        <td><input class="form-control" id="mGroupNm" style="height:25px" name="mGroupNm" ></td>
+	        <td><input class="form-control" id="mOrderBy" style="height:25px" name="mOrderBy" ></td>
+	    </tr>
     </tbody>
+    <tfoot id="mGroup">
+    	
+    </tfoot>
   </table>
   </div> 
 </div>

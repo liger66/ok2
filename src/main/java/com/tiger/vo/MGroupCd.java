@@ -1,7 +1,7 @@
 package com.tiger.vo;
 
 public class MGroupCd {
-	private String gubunCd,	lGroupCd,mGroupCd,mGroupNm,useYn,memo,orderBy,inUser,inDate;
+	private String gubunCd,	lGroupCd,mGroupCd,mGroupNm,useYN,memo,orderBy,inUser,inDate;
 
 	public String getGubunCd() {
 		return gubunCd;
@@ -35,12 +35,12 @@ public class MGroupCd {
 		this.mGroupNm = mGroupNm;
 	}
 
-	public String getUseYn() {
-		return useYn;
+	public String getUseYN() {
+		return useYN;
 	}
 
-	public void setUseYn(String useYn) {
-		this.useYn = useYn;
+	public void setUseYN(String useYN) {
+		this.useYN = useYN;
 	}
 
 	public String getMemo() {

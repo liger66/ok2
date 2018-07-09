@@ -13,13 +13,17 @@ private SqlSession session;
 	public void setSession (SqlSession session) {
 		this.session = session;
 	}
-
-	public List<MGroupCd> selectList(String gbCode, String lGroupCd) {
-		List<MGroupCd>  mGroupList = session.selectList("mGroupCd.selectList", gbCode);
-		return mGroupList;
+	public void insert(MGroupCd mGroupCd) {		
+		session.insert("mGroupCd.insert", mGroupCd);
 	}
 
-	public void insert(MGroupCd mGroupCd) {
-		session.insert("mGroupCd.insert",mGroupCd);
+	public List<MGroupCd> selectList(MGroupCd mGroupCd) {
+		List<MGroupCd>  mGroupList = session.selectList("mGroupCd.selectList", mGroupCd);
+		return mGroupList;
+	}
+	
+	public MGroupCd selectOne(MGroupCd mGroup) {
+		MGroupCd mGroupCd = session.selectOne("mGroupCd.selectOne", mGroup);
+		return mGroupCd;
 	}
 }
