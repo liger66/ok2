@@ -11,10 +11,29 @@
 	margin:0 auto;
 }
 .table-fix {
-    display: block;
-    max-height: 540px;
-    overflow-y: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    display: block;    
+    overflow-y: auto; 
+}
+.table-max540 { max-height:540px; }
+.table tbody > tr > td > input { height:25px;}
+.hlabel { font-size:15px; padding-top:7px; text-align:right; }
+.htext { width:50px; font-size:15px; }
+
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
 }
 
 

@@ -17,14 +17,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-11">
-				<img src="/sysimg/main1.jpg" class="img-responsive img-rounded"/>
+				<img src="/sysimg/main2.jpg" class="img-responsive img-rounded"/>
 			</div>
-		<!-- 	<div class="col-xs-4">
-				<img src="/sysimg/main2.jpg" class="img-responsive img-circle"/>
-			</div>
-			<div class="col-xs-4">
-				<img src="/sysimg/main3.jpg" class="img-responsive img-thumbnail"/>
-			</div>  -->
 		</div>
 	</div>
 </body>

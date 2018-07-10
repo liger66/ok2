@@ -34,6 +34,11 @@ public class MainController {
 		return "/login.jsp";
 	}
 	
+	@RequestMapping("/jepum")
+	public String jepum() {
+		return "/jepum.jsp";
+	}
+	
 	@RequestMapping("/login/in")
 	public String loginin(@RequestParam(required=false) String id, 
 						  @RequestParam(required=false) String pass, HttpServletRequest request) {

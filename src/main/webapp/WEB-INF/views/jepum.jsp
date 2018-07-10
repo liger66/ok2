@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>공통 코드 등록</title>
+<title>제품 코드 등록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -197,115 +197,123 @@
 </script>
 
 <body>
-	<div class="container">
-		<div class="col-sm-8">
-			<h3 class="title text-center">공통 코드 등록</h3>
-		</div>
-		<div class="col-sm-4">
-			<button type="button" id="btn_init" class="btn">초기화</button>
-			<button type="button" id="btn_serch" class="btn btn-primary"
-					onclick="inquiry()">조회</button>
-			<button type="button" id="btn_new" class="btn btn-info"
-					onclick="snew()">신규</button>
-			<button type="button" id="btn_store" class="btn btn-success" disabled="disabled" 
-					onclick="insert()">저장</button>
-			<button type="button" id="btn_delete" class="btn btn-danger"
-					disabled="disabled">삭제</button>
-		</div>
+<div class="container">
+	<div class="col-sm-8">
+		<h3 class="title text-center">제품 코드 등록</h3>
 	</div>
-
-	<hr />
-
-	<div class="container">
-		<form id="gbForm" class="form-inline"
-			  action="${pageContext.request.contextPath}/code/insertGb" method="post">
-			<div class="input-group col-sm-2">
-				<span class="input-group-addon">구분코드</span> <input id="gubunCd"
-					type="text" class="form-control" name="gubunCd">
-			</div>
-			<div class="input-group col-sm-1"></div>
-
-			<div class="input-group col-sm-5">
-				<span class="input-group-addon">구분 명</span> <input id="gubunNm"
-					type="text" class="form-control" name="gubunNm">
-			</div>
-		</form>
-
-		<hr />
-
-		<div class="form-group col-sm-3">
-			<h4 class="text-center">구분 코드</h4>
-			<table class="table table-bordered table-fix table-max540">
-				<thead>
-					<tr>
-						<th class="text-center col-sm-3">코드</th>
-						<th class="text-center col-sm-9">명칭</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					<c:forEach var="gb" items="${codeGbList }">
-					<tr >
-						<td class="text-c"><a href="#"
-							onclick="selectgubunCd(this); return false;">${gb.gubunCd}</a>
-						</td>
-						<td>${gb.gubunNm }</td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div class="form-group col-sm-5">
-			<h4 class="text-center col-sm-10">대 분류</h4>
-			<input type="hidden" id="hgubunCd">
-			<button type="button" class="btn btn-success col-sm-2"
-				disabled="disabled" id="btn_lGroup" onclick="insertLGroup()">저장</button>
-			<table class="table table-bordered table-fix table-max540">
-				<thead>
-					<tr class="height25">
-						<th class="text-center col-sm-3">코드</th>
-						<th class="text-center col-sm-7">명칭</th>
-						<th class="text-center col-sm-2">Sort</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><input class="form-control" id="lGroupCd" name="lGroupCd"></td>
-						<td><input class="form-control" id="lGroupNm" name="lGroupNm"></td>
-						<td><input class="form-control" id="lOrderBy" name="lOrderBy"></td>
-					</tr>
-				</tbody>
-				<tfoot id="lGroup">
-
-				</tfoot>
-			</table>
-		</div>
-
-		<div class="form-group col-sm-4">
-			<h4 class="text-center col-sm-10">중 분류</h4>
-			<input type="hidden" id="hLGroupCd">
-			<button type="button" class="btn btn-success col-sm-2"
-					disabled="disabled" id="btn_mGroup" onclick="insertMGroup()">저장</button>
-			<table class="table table-bordered table-fix table-max540">
-				<thead>
-					<tr>
-						<th class="text-center col-sm-3">코드</th>
-						<th class="text-center col-sm-7">명칭</th>
-						<th class="text-center col-sm-2">Sort</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><input class="form-control" id="mGroupCd" name="mGroupCd"></td>
-						<td><input class="form-control" id="mGroupNm" name="mGroupNm"></td>
-						<td><input class="form-control" id="mOrderBy" name="mOrderBy"></td>
-					</tr>
-				</tbody>
-				<tfoot id="mGroup">
-
-				</tfoot>
-			</table>
-		</div>
+	<div class="col-sm-4">
+		<button type="button" id="btn_init" class="btn">초기화</button>
+		<button type="button" id="btn_serch" class="btn btn-primary"
+				onclick="inquiry()">조회</button>
+		<button type="button" id="btn_new" class="btn btn-info"
+				onclick="snew()">신규</button>
+		<button type="button" id="btn_store" class="btn btn-success" disabled="disabled" 
+				onclick="insert()">저장</button>
+		<button type="button" id="btn_delete" class="btn btn-danger"
+				disabled="disabled">삭제</button>
 	</div>
+</div>
+
+<hr />
+
+<div>
+<div class="container col-sm-3">	
+	<form class="form-horizontal ">
+		<div class="form-group form-inline">
+	      <label class="col-sm-6 control-label">브랜드 코드</label>
+	      <select class="form-control" style="width:120px;" id="brand">
+	        <option>1</option>
+	        <option>2</option>
+	        <option>3</option>
+	        <option>4</option>
+	      </select>
+	    </div> 
+	    <div class="form-group form-inline">
+	      <label class="col-sm-6 control-label">기획 년도</label>
+	      <select class="form-control" style="width:120px;" id="giyy">
+	        <option>18 년</option>
+	        <option>2</option>
+	        <option>3</option>
+	        <option>4</option>
+	      </select>
+	    </div>
+	    <div class="form-group form-inline">
+	      <label class="col-sm-6 control-label">시 즌</label>
+	      <select class="form-control" style="width:120px;" id="season">
+	        <option>S 봄</option>
+	        <option>2</option>
+	        <option>3</option>
+	        <option>4</option>
+	      </select>
+	    </div>
+	    <div class="form-group form-inline">
+	      <label class="col-sm-6 control-label">제품 명</label>
+	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	    </div>
+    </form>
+    
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th class="text-center col-sm-6">제품코드</th>
+				<th class="text-center col-sm-6">소비자 가</th>
+			</tr>
+		</thead>
+		
+		<tbody>			
+			<c:forEach var="jp" items="${jepumList }">
+			<tr >
+				<td class="text-c"><a href="#"
+					onclick="selectgubunCd(this); return false;">${jp.jepumCd}</a>
+				</td>
+				<td>${jp.sobi}</td>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+
+<div class="container col-sm-9">
+	<div class="form-group col-sm-8">
+		<div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel" >제품 코드</label>
+	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
+	    </div>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel">제품 코드</label>
+	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	    </div> <br>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel" >제품 코드</label>
+	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
+	    </div>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel">제품 코드</label>
+	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	    </div> <br>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel" >제품 코드</label>
+	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
+	    </div>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel">제품 코드</label>
+	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	    </div> <br>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel" >제품 코드</label>
+	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
+	    </div>
+	    <div class="form-group form-inline col-sm-6">
+	      <label class="col-sm-6 hlabel">제품 코드</label>
+	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	    </div> <br>
+	</div>
+	<div class="form-group col-sm-4" style="border-style:ridge; height:300px;">
+	
+	</div>
+</div>
+
+</div>
+
 </body>
 </html>
