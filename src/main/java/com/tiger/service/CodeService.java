@@ -21,5 +21,7 @@ public interface CodeService {
 	
 	List<MGroupCd> selectMGroupCdList(String gubunCd, String lGroupCd);
 	
-	MGroupCd selectMGroupOne(MGroupCd mGroup);	
+	MGroupCd selectMGroupOne(MGroupCd mGroup);
+	
+	List<LGroupCd> selectPumjongList();	
 }

@@ -11,6 +11,7 @@
 	<!-- <bean class="com.tiger.controller.HelloController"/> -->
 	<bean id="mainController" class="com.tiger.controller.MainController">
 		<property name="tuserService" ref="tuserService"/>
+		<property name="codeService" ref="codeService"/>
 	</bean>
 	
 	<bean id="codeController" class="com.tiger.controller.CodeController">

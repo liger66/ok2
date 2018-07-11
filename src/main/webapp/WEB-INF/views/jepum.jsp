@@ -217,38 +217,43 @@
 <hr />
 
 <div>
-<div class="container col-sm-3">	
+<div class="container col-sm-3">
 	<form class="form-horizontal ">
 		<div class="form-group form-inline">
 	      <label class="col-sm-6 control-label">브랜드 코드</label>
-	      <select class="form-control" style="width:120px;" id="brand">
-	        <option>1</option>
-	        <option>2</option>
-	        <option>3</option>
-	        <option>4</option>
+	      <select id="sBrand" name="sBrand" class="form-control" style="width:120px;">
+		      <c:forEach var="sb" items="${sBrandList }">
+		        <option value="${sb.lGroupCd}" 
+		        	<c:if test="${tUser.brand == sb.lGroupCd}"> selected</c:if>>${sb.lGroupNm}</option>
+		      </c:forEach>
 	      </select>
 	    </div> 
 	    <div class="form-group form-inline">
 	      <label class="col-sm-6 control-label">기획 년도</label>
-	      <select class="form-control" style="width:120px;" id="giyy">
-	        <option>18 년</option>
-	        <option>2</option>
-	        <option>3</option>
-	        <option>4</option>
+	      <select id="sGiYY" name="sGiYY" class="form-control" style="width:120px;" >
+	        <c:forEach var="sg" items="${sGiYYList }">
+		        <option value="${sg.lGroupCd}" 
+		        	<c:if test="${tUser.giYY == sg.lGroupCd}"> selected</c:if>>${sg.lGroupNm}</option>
+		    </c:forEach>
 	      </select>
 	    </div>
 	    <div class="form-group form-inline">
 	      <label class="col-sm-6 control-label">시 즌</label>
-	      <select class="form-control" style="width:120px;" id="season">
-	        <option>S 봄</option>
-	        <option>2</option>
-	        <option>3</option>
-	        <option>4</option>
+	      <select id="sSeason" name="sSeason" class="form-control" style="width:120px;" >
+	        <c:forEach var="ss" items="${sSeasonList }">
+		        <option value="${ss.lGroupCd}" 
+		        	<c:if test="${tUser.season == ss.lGroupCd}"> selected</c:if>>${ss.lGroupNm}</option>
+		    </c:forEach>
 	      </select>
 	    </div>
 	    <div class="form-group form-inline">
-	      <label class="col-sm-6 control-label">제품 명</label>
-	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
+	      <label class="col-sm-6 control-label">품 종</label>
+	      <select id="sPumjong" name="sPumjong" class="form-control" style="width:120px;" >
+	            <option value="all" selected>전체</option>
+	        <c:forEach var="sp" items="${sPumjongList }">
+		        <option value="${sp.lGroupCd}">${sp.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
 	    </div>
     </form>
     
@@ -273,44 +278,173 @@
 	</table>
 </div>
 
-<div class="container col-sm-9">
+<div class="container col-sm-9">	
+	<div class="form-group col-sm-4">
+		<div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >제품 코드</label>
+	      <input id="jepum" name="jepum" class="form-control iup" style="width:120px; font-weight:bold;">    
+	    </div> 
+	</div>		
 	<div class="form-group col-sm-8">
-		<div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel" >제품 코드</label>
-	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
-	    </div>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel">제품 코드</label>
-	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
-	    </div> <br>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel" >제품 코드</label>
-	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
-	    </div>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel">제품 코드</label>
-	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
-	    </div> <br>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel" >제품 코드</label>
-	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
-	    </div>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel">제품 코드</label>
-	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
-	    </div> <br>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel" >제품 코드</label>
-	      <input class="form-control htext" id="jepum" type="text" style="width:120px; font-weight:bold;">	      
-	    </div>
-	    <div class="form-group form-inline col-sm-6">
-	      <label class="col-sm-6 hlabel">제품 코드</label>
-	      <input class="form-control" id="jepumNm" type="text" style="width:120px;">	      
-	    </div> <br>
+		<div class="form-group form-inline ">
+	      <label class="col-sm-3 hlabel" >제품 명</label>
+	      <input class="form-control" id="jepum" name="jepum" style="width:300px;">      
+	    </div> 
 	</div>
-	<div class="form-group col-sm-4" style="border-style:ridge; height:300px;">
+
+
+	<div class="form-group col-sm-4">
+		<div class="form-group form-inline">
+	      <label class="col-sm-6 hlabel" >브랜드</label>
+	      <input id="brand" name="brand" class="form-control" style="width:120px; " 
+	      		 value="${brand}" readonly="readonly">	      
+	    </div> 
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >제품구분</label>
+	      <select id="jepumGb" name="jepumGb" class="form-control" style="width:120px;" >
+	        <c:forEach var="mj" items="${jepumGbList }">
+		        <option value="${mj.lGroupCd}">${mj.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div>
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >마진구분</label>
+	      <select id="majinGb" name="majinGb" class="form-control" style="width:120px;" >
+	        <c:forEach var="mm" items="${majinGbList }">
+		        <option value="${mm.lGroupCd}">${mm.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div>	    
+	</div>	
+	<div class="form-group col-sm-4">
+		<div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >기획년도</label>
+	      <input id="giYY" name="giYY" class="form-control" style="width:120px;" 
+	      		 value="${giYY}" readonly="readonly">    
+	    </div> 
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >기획구분</label>
+	      <select id="giGb" name="giGb" class="form-control" style="width:120px;" >
+	        <c:forEach var="mg" items="${giGbList }">
+		        <option value="${mg.lGroupCd}">${mg.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div>
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >소재구분</label>
+	      <select id="sojeGb" name="sojeGb" class="form-control" style="width:120px;" >
+	        <c:forEach var="ms" items="${sojeGbList }">
+		        <option value="${ms.lGroupCd}">${ms.lGroupNm}</option>
+		    </c:forEach>
+	      </select> 
+	    </div>	    
+	</div>	
+	<div class="form-group col-sm-4">
+		<div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >계 절</label>
+	      <input id="season" name="season" class="form-control" 
+	      	     value="${season}" style="width:120px;" readonly="readonly">      
+	    </div> 
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >품 종</label>
+	      <input id="pum" name="pum" class="form-control" style="width:120px;" 
+	      	     value="${pum}" readonly="readonly">      
+	    </div>
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >가격구분</label>
+	      <select id="priceGb" name="priceGb" class="form-control" style="width:120px;" >
+	        <c:forEach var="mp" items="${priceList }">
+		        <option value="${mp.lGroupCd}">${mp.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div>	    
+	</div>
 	
-	</div>
+	<div class="form-group col-sm-4">	
+		<div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >사이즈 그룹</label>
+	      <select id="sizGr" name="sizGr" class="form-control" style="width:120px;" >
+	        <c:forEach var="mz" items="${sizGrList }">
+		        <option value="${mz.lGroupCd}">${mz.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div> 
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >생산형태</label>
+	      <select id="sengHt" name="sengHt" class="form-control" style="width:120px;" >
+	        <c:forEach var="mh" items="${sengHtList }">
+		        <option value="${mh.lGroupCd}">${mh.lGroupNm}</option>
+		    </c:forEach>
+	      </select>
+	    </div>
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-6 hlabel" >사입판매여부</label>
+	      <select id="saipYN" name="saipYN" class="form-control" style="width:120px;" >
+	      		<option value="N" selected>No</option>
+	      		<option value="Y">Yes</option>
+	      </select>
+	    </div>  
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-5 hlabel" style="font-size:12px" >기획 입고일</label>
+	      <input class="form-control" id="jepum" name="jepum" type="date"
+	      		 value="${giIpgoDt}" style="width:150px;">    
+	    </div> 
+	    <div class="form-group form-inline ">
+	      <label class="col-sm-5 hlabel" style="font-size:12px">기획 판매일</label>
+	      <input id="jepum" name="jepum" class="form-control" type="date"
+	      		 value="${giPanDt}" style="width:150px;">    
+	    </div> 
+	</div>		
+	<div class="form-group col-sm-8">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="text-c col-sm-4 tbcolor">구분</th>
+					<th class="text-c col-sm-4 tbcolor">기획</th>
+					<th class="text-c col-sm-4 tbcolor">획정</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr >
+					<td class="text-c tbcolor pt13">원자재 비</td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${giWonjaje }"> </td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${wonjaje }"> </td>
+				</tr>
+				<tr >
+					<td class="text-c tbcolor pt13">부자재 비</td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${giBujaje }"> </td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${bujaje }"> </td>
+				</tr>
+				<tr >
+					<td class="text-c tbcolor pt13" >임봉료 비</td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${giImbong }"> </td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${imbong }"> </td>
+				</tr>
+				<tr >
+					<td class="text-c tbcolor pt13" >원가 합계</td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${giWon }"> </td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${won }"> </td>
+				</tr>
+				<tr >
+					<td class="text-c tbcolor pt13">소비자가</td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${giSobi }"> </td>
+					<td><input id="jepum" name="jepum" class="form-control" style="width:160px;"
+							   value="${sobi }"> </td>
+				</tr>
+			</tbody>
+		</table>
+	</div> 
+	
 </div>
 
 </div>

@@ -40,6 +40,10 @@
 			type : "POST",
 			data : {gubunCd : gubunCd},
 			success : function(data) {
+				if (data == "L") {
+					alert("Login 후 사용 합니다.");
+					return;
+				}
 				if (data == "Y") {
 					alert("이미 등록된 코드 구분 입니다.");
 					$("#gubunCd").focus();
@@ -76,6 +80,10 @@
 				lOrderBy : lOrderBy
 			},
 			success : function(data) {
+				if (data == "L") {
+					alert("Login 후 사용 합니다.");
+					return;
+				}
 				if (data == "Y") {
 					alert("중복된 코드가 있습니다.");
 					return;
@@ -110,6 +118,10 @@
 				mOrderBy : mOrderBy
 			},
 			success : function(data) {
+				if (data == "L") {
+					alert("Login 후 사용 합니다.");
+					return;
+				}
 				if (data == "Y") {
 					alert("중복된 코드가 있습니다.");
 					return;
@@ -220,14 +232,14 @@
 		<form id="gbForm" class="form-inline"
 			  action="${pageContext.request.contextPath}/code/insertGb" method="post">
 			<div class="input-group col-sm-2">
-				<span class="input-group-addon">구분코드</span> <input id="gubunCd"
-					type="text" class="form-control" name="gubunCd">
+				<span class="input-group-addon">구분코드</span> 
+				<input id="gubunCd" class="form-control iup" name="gubunCd">
 			</div>
 			<div class="input-group col-sm-1"></div>
 
 			<div class="input-group col-sm-5">
-				<span class="input-group-addon">구분 명</span> <input id="gubunNm"
-					type="text" class="form-control" name="gubunNm">
+				<span class="input-group-addon">구분 명</span> 
+				<input id="gubunNm" class="form-control" name="gubunNm">
 			</div>
 		</form>
 
@@ -270,7 +282,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input class="form-control" id="lGroupCd" name="lGroupCd"></td>
+						<td><input class="form-control iup" id="lGroupCd" name="lGroupCd"></td>
 						<td><input class="form-control" id="lGroupNm" name="lGroupNm"></td>
 						<td><input class="form-control" id="lOrderBy" name="lOrderBy"></td>
 					</tr>
@@ -296,7 +308,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input class="form-control" id="mGroupCd" name="mGroupCd"></td>
+						<td><input class="form-control iup" id="mGroupCd" name="mGroupCd"></td>
 						<td><input class="form-control" id="mGroupNm" name="mGroupNm"></td>
 						<td><input class="form-control" id="mOrderBy" name="mOrderBy"></td>
 					</tr>

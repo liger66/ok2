@@ -18,6 +18,9 @@
 .table tbody > tr > td > input { height:25px;}
 .hlabel { font-size:15px; padding-top:7px; text-align:right; }
 .htext { width:50px; font-size:15px; }
+.tbcolor {background-color: rgb(240, 240, 240);}
+.pt13 {padding-top: 13px;}
+.iup {text-transform: uppercase;}
 
 
 .table-fixed thead {

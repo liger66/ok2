@@ -42,22 +42,11 @@ public class CodeController {
 	@RequestMapping(value="/code/insertGb", method=RequestMethod.POST)
 	public String insertGb(@RequestParam(required=false) String gubunCd, 
 						   @RequestParam(required=false) String gubunNm) {
+		gubunCd = gubunCd.toUpperCase();	
 		codeService.insert(gubunCd, gubunNm);
 		
 		return "redirect:/code/gbList";
 	}
-	
-	/*@RequestMapping(value="/code/gbList", method=RequestMethod.GET)
-	public String gbList(Model model) {
-		CodeGb codeGb = new CodeGb();
-		
-		List<CodeGb>  codeGbList = codeService.selectCodeGbList(codeGb);
-		model.addAttribute("codeGbList", codeGbList);
-				
-		System.out.println("list length : " + codeGbList.size());
-		
-		return "/code.jsp";
-	}*/
 	
 	@RequestMapping(value="/code/gbList", method=RequestMethod.GET)
 	public String gbList(@RequestParam(required=false) String gubunCd, 
@@ -108,9 +97,10 @@ public class CodeController {
 		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
 		if (tuser == null) {
 			System.out.println("no login ----------->");
-			return "Y";
+			return "L";
 		}
 		String userCd = tuser.getUserCd();
+		lGroupCd = lGroupCd.toUpperCase();
 		
 		LGroupCd  lGroup = new LGroupCd();
 		
@@ -145,9 +135,10 @@ public class CodeController {
 		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
 		if (tuser == null) {
 			System.out.println("no login ----------->");
-			return "Y";
+			return "L";
 		}
 		String userCd = tuser.getUserCd();
+		mGroupCd = mGroupCd.toUpperCase();
 		
 		MGroupCd  mGroup = new MGroupCd();
 		

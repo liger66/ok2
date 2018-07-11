@@ -1,22 +1,31 @@
 package com.tiger.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tiger.service.CodeService;
 import com.tiger.service.TuserService;
+import com.tiger.vo.LGroupCd;
+import com.tiger.vo.Tuser;
 
 @Controller
 public class MainController {
-	private TuserService  tuserservice;
-	
+	private TuserService  tuserservice;	
 	public void setTuserService (TuserService tuserService) {
 		this.tuserservice = tuserService;
+	}
+	
+	private CodeService  codeService;	
+	public void setCodeService (CodeService codeService) {
+		this.codeService = codeService;
 	}
 	
 	@RequestMapping("/main")
@@ -35,7 +44,48 @@ public class MainController {
 	}
 	
 	@RequestMapping("/jepum")
-	public String jepum() {
+	public String jepum(Model model, HttpServletRequest request) {
+		Tuser tUser = (Tuser) request.getSession().getAttribute("tuser");
+		if (tUser == null) {
+			System.out.println("no login ----------->");
+			return "L";
+		}
+		model.addAttribute("tUser", tUser);
+		
+		List<LGroupCd> lGroupCdList = codeService.selectLGroupCdList("BRAND");	
+		model.addAttribute("sBrandList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("GIYY");		
+		model.addAttribute("sGiYYList", lGroupCdList);
+		
+		
+		lGroupCdList = codeService.selectLGroupCdList("SEASON");		
+		model.addAttribute("sSeasonList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectPumjongList();		
+		model.addAttribute("sSeason", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("JEPUMG");		
+		model.addAttribute("jepumGbList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("GIG");		
+		model.addAttribute("giGbList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("MAJING");		
+		model.addAttribute("majinGbList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("SOJEG");		
+		model.addAttribute("sojeGbList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("PRICEG");		
+		model.addAttribute("priceGbList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("SIZEG");		
+		model.addAttribute("sizGrList", lGroupCdList);
+		
+		lGroupCdList = codeService.selectLGroupCdList("SENGH");		
+		model.addAttribute("sengHtList", lGroupCdList);
+		
 		return "/jepum.jsp";
 	}
 	

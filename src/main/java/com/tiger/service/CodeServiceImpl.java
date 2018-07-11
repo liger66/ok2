@@ -101,4 +101,10 @@ public class CodeServiceImpl implements CodeService {
 		mGroupCdDao.insert(mGroup);		
 	}
 
+	@Override
+	public List<LGroupCd> selectPumjongList() {
+		//pumjongDao.selectList();
+		return null;
+	}
+
 }
