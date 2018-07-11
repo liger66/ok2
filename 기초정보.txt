@@ -59,7 +59,7 @@ location (	locCd
 	inUser
 	inDate
 
-pumjong (	brand
+pumjong (
 	pumCd
 	pumNm
 	sizeGroupCd
