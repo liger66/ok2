@@ -15,6 +15,10 @@
 </head>
 
 <script type="text/javascript">
+	function init() {		
+		location.href = "${pageContext.request.contextPath}/code";
+	}
+	
 	function snew() {
 		$("#btn_store").attr('disabled', false);
 		$("#gubunCd").val("");
@@ -214,7 +218,8 @@
 			<h3 class="title text-center">공통 코드 등록</h3>
 		</div>
 		<div class="col-sm-4">
-			<button type="button" id="btn_init" class="btn">초기화</button>
+			<button type="button" id="btn_init" class="btn"
+					onclick="init()">초기화</button>
 			<button type="button" id="btn_serch" class="btn btn-primary"
 					onclick="inquiry()">조회</button>
 			<button type="button" id="btn_new" class="btn btn-info"

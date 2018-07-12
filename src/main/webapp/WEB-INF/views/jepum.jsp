@@ -15,10 +15,12 @@
 </head>
 
 <script type="text/javascript">
-	function snew() {
-		$("#btn_store").attr('disabled', false);
-		$("#gubunCd").val("");
-		$("#gubunNm").val("");
+	function init() {		
+		location.href = "${pageContext.request.contextPath}/jepum";
+	}
+	
+	function mnew() {		
+		location.href = "${pageContext.request.contextPath}/jepum/mnew";
 	}
 
 	function insert() {
@@ -52,148 +54,6 @@
 			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
 		});
 	}
-
-	function insertLGroup() {
-		var gubunCd = $("#hgubunCd").val();
-
-		var lGroupCd = $("#lGroupCd").val();
-		var lGroupNm = $("#lGroupNm").val();
-		var lOrderBy = $("#lOrderBy").val();
-
-		if (lGroupCd == "" || lGroupNm == "" || lOrderBy == "") {
-			alert("입력 항목을 채워 주세요.");
-			$("#lGroupCd").focus();
-			return;
-		}
-
-		$.ajax({
-			url : "${pageContext.request.contextPath}/code/insertLGroup",
-			type : "POST",
-			data : {
-				gubunCd : gubunCd,
-				lGroupCd : lGroupCd,
-				lGroupNm : lGroupNm,
-				lOrderBy : lOrderBy
-			},
-			success : function(data) {
-				if (data == "Y") {
-					alert("중복된 코드가 있습니다.");
-					return;
-				}
-			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
-		});
-	}
-
-	function insertMGroup() {
-		var gubunCd = $("#hgubunCd").val();
-		var lGroupCd = $("#hLGroupCd").val();
-
-		var mGroupCd = $("#mGroupCd").val();
-		var mGroupNm = $("#mGroupNm").val();
-		var mOrderBy = $("#mOrderBy").val();
-
-		if (mGroupCd == "" || mGroupNm == "" || mOrderBy == "") {
-			alert("입력 항목을 채워 주세요.");
-			$("#mGroupCd").focus();
-			return;
-		}
-
-		$.ajax({
-			url : "${pageContext.request.contextPath}/code/insertMGroup",
-			type : "POST",
-			data : {
-				gubunCd : gubunCd,
-				lGroupCd : lGroupCd,
-				mGroupCd : mGroupCd,
-				mGroupNm : mGroupNm,
-				mOrderBy : mOrderBy
-			},
-			success : function(data) {
-				if (data == "Y") {
-					alert("중복된 코드가 있습니다.");
-					return;
-				}
-			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
-		});
-	}
-
-	function inquiry() {
-		$("#btn_store").attr('disabled', true);
-		var gubunCd = $("#gubunCd").val();
-		var gubunNm = $("#gubunNm").val();
-
-		location.href = "${pageContext.request.contextPath}/code/gbList?gubunCd="
-						+ gubunCd + "&gubunNm=" + gubunNm;
-	}
-
-	function selectgubunCd(a) {
-		$("#btn_lGroup").attr('disabled', false);
-
-		var gubunCd = $(a).text();
-
-		$("#hgubunCd").val(gubunCd);
-		$("#lGroupCd").val("");
-		$("#lGroupNm").val("");
-		$("#lOrderBy").val("");
-
-		$.ajax({
-			url : "${pageContext.request.contextPath}/code/lGroupList",
-			type : "POST",
-			data : {gubunCd : gubunCd},
-			success : function(data) {
-				$("#lGroup").empty();
-				for (var i = 0; i < data.length; i++) {
-					var tx = "<tr class='text-c'> <td> ";
-					tx += "<a href='#' onclick='selectLGroup(this); return false;'>";
-					tx += data[i].lGroupCd + "</a> </td>";
-
-					tx += "<td class='text-l'>" + data[i].lGroupNm
-							+ "</td>";
-					tx += "<td>" + data[i].orderBy + "</td> </tr>";
-
-					$("#lGroup").append(tx);
-				}
-			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
-		});
-	}
-
-	function selectLGroup(b) {
-		$("#btn_mGroup").attr('disabled', false);
-
-		var gubunCd = $("#hgubunCd").val();
-		var lGroupCd = $(b).text();
-		alert("lGroupCd : " + lGroupCd);
-		$("#hLGroupCd").val(lGroupCd);
-
-		$("#mGroupCd").val("");
-		$("#mGroupNm").val("");
-		$("#mOrderBy").val("");
-
-		$.ajax({
-			url : "${pageContext.request.contextPath}/code/mGroupList",
-			type : "POST",
-			data : {
-				gubunCd : gubunCd,
-				lGroupCd : lGroupCd
-			},
-			success : function(data) {
-				$("#mGroup").empty();
-				for (var i = 0; i < data.length; i++) {
-					var tx = "<tr class='text-c'> <td> ";
-					tx += data[i].mGroupCd + "</td>";
-
-					tx += "<td class='text-l'>" + data[i].mGroupNm + "</td>";
-					tx += "<td>" + data[i].orderBy + "</td> </tr>";
-
-					$("#mGroup").append(tx);
-				}
-			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
-		});
-	}
 </script>
 
 <body>
@@ -202,12 +62,14 @@
 		<h3 class="title text-center">제품 코드 등록</h3>
 	</div>
 	<div class="col-sm-4">
-		<button type="button" id="btn_init" class="btn">초기화</button>
+		<button type="button" id="btn_init" class="btn"
+				onclick="init()">초기화</button>
 		<button type="button" id="btn_serch" class="btn btn-primary"
 				onclick="inquiry()">조회</button>
 		<button type="button" id="btn_new" class="btn btn-info"
-				onclick="snew()">신규</button>
-		<button type="button" id="btn_store" class="btn btn-success" disabled="disabled" 
+				onclick="mnew()">신규</button>
+		<button type="button" id="btn_store" class="btn btn-success" 
+				<c:if test="${!mnew}">disabled="disabled"</c:if> 
 				onclick="insert()">저장</button>
 		<button type="button" id="btn_delete" class="btn btn-danger"
 				disabled="disabled">삭제</button>
@@ -251,7 +113,7 @@
 	      <select id="sPumjong" name="sPumjong" class="form-control" style="width:120px;" >
 	            <option value="all" selected>전체</option>
 	        <c:forEach var="sp" items="${sPumjongList }">
-		        <option value="${sp.lGroupCd}">${sp.lGroupNm}</option>
+		        <option value="${sp.pumCd}">${sp.pumNm}</option>
 		    </c:forEach>
 	      </select>
 	    </div>
@@ -282,13 +144,13 @@
 	<div class="form-group col-sm-4">
 		<div class="form-group form-inline ">
 	      <label class="col-sm-6 hlabel" >제품 코드</label>
-	      <input id="jepum" name="jepum" class="form-control iup" style="width:120px; font-weight:bold;">    
+	      <input id="jepum" name="jepum" class="form-control iup" style="width:120px; font-weight:bold;" value="${menu.id }">    
 	    </div> 
 	</div>		
 	<div class="form-group col-sm-8">
 		<div class="form-group form-inline ">
 	      <label class="col-sm-3 hlabel" >제품 명</label>
-	      <input class="form-control" id="jepum" name="jepum" style="width:300px;">      
+	      <input id="jepumNm" name="jepumNm" class="form-control" style="width:300px;">      
 	    </div> 
 	</div>
 
@@ -326,7 +188,7 @@
 	      <label class="col-sm-6 hlabel" >기획구분</label>
 	      <select id="giGb" name="giGb" class="form-control" style="width:120px;" >
 	        <c:forEach var="mg" items="${giGbList }">
-		        <option value="${mg.lGroupCd}">${mg.lGroupNm}</option>
+		        <option value="${mg.lGroupCd}" >${mg.lGroupNm}</option>
 		    </c:forEach>
 	      </select>
 	    </div>
@@ -386,14 +248,16 @@
 	    </div>  
 	    <div class="form-group form-inline ">
 	      <label class="col-sm-5 hlabel" style="font-size:12px" >기획 입고일</label>
-	      <input class="form-control" id="jepum" name="jepum" type="date"
-	      		 value="${giIpgoDt}" style="width:150px;">    
+	      <input id="giIpgoDt" name="giIpgoDt" class="form-control" type="date" 
+	      		 value="${jepum.giIpgoDt}" style="width:150px;">    
 	    </div> 
 	    <div class="form-group form-inline ">
 	      <label class="col-sm-5 hlabel" style="font-size:12px">기획 판매일</label>
-	      <input id="jepum" name="jepum" class="form-control" type="date"
-	      		 value="${giPanDt}" style="width:150px;">    
-	    </div> 
+	      <input id="giPanDt" name="giPanDt" class="form-control" type="date" 
+	      		 value="${jepum.giPanDt}" style="width:150px;" >
+	      <!-- <input id="giPanDt" name="giPanDt" class="form-control" style="width:150px;" type="date" 
+	      		 <f:formatDate value="${panDt}" pattern="yyyy-mm-dd" /> >    -->
+	    </div>  
 	</div>		
 	<div class="form-group col-sm-8">
 		<table class="table table-bordered">

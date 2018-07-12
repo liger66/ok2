@@ -5,6 +5,7 @@ import java.util.List;
 import com.tiger.vo.CodeGb;
 import com.tiger.vo.LGroupCd;
 import com.tiger.vo.MGroupCd;
+import com.tiger.vo.Pumjong;
 
 public interface CodeService {
 	void insert(String gubunCd, String gubunNm);
@@ -23,5 +24,5 @@ public interface CodeService {
 	
 	MGroupCd selectMGroupOne(MGroupCd mGroup);
 	
-	List<LGroupCd> selectPumjongList();	
+	List<Pumjong> selectPumjongList();
 }

@@ -62,7 +62,7 @@ location (	locCd
 pumjong (
 	pumCd
 	pumNm
-	sizeGroupCd
+	sizGroupCd
 	orderBy
 
 baebun (	baebGroupCd

@@ -1,5 +1,6 @@
 package com.tiger.controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.tiger.service.CodeService;
 import com.tiger.service.TuserService;
 import com.tiger.vo.LGroupCd;
+import com.tiger.vo.Pumjong;
 import com.tiger.vo.Tuser;
 
 @Controller
@@ -45,6 +47,7 @@ public class MainController {
 	
 	@RequestMapping("/jepum")
 	public String jepum(Model model, HttpServletRequest request) {
+		System.out.println("123");
 		Tuser tUser = (Tuser) request.getSession().getAttribute("tuser");
 		if (tUser == null) {
 			System.out.println("no login ----------->");
@@ -62,30 +65,9 @@ public class MainController {
 		lGroupCdList = codeService.selectLGroupCdList("SEASON");		
 		model.addAttribute("sSeasonList", lGroupCdList);
 		
-		lGroupCdList = codeService.selectPumjongList();		
-		model.addAttribute("sSeason", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("JEPUMG");		
-		model.addAttribute("jepumGbList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("GIG");		
-		model.addAttribute("giGbList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("MAJING");		
-		model.addAttribute("majinGbList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("SOJEG");		
-		model.addAttribute("sojeGbList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("PRICEG");		
-		model.addAttribute("priceGbList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("SIZEG");		
-		model.addAttribute("sizGrList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("SENGH");		
-		model.addAttribute("sengHtList", lGroupCdList);
-		
+		List<Pumjong> pumjongList = codeService.selectPumjongList();	
+		model.addAttribute("sPumjongList", pumjongList);
+				
 		return "/jepum.jsp";
 	}
 	

@@ -8,6 +8,9 @@
 	
 	<context:property-placeholder location="classpath:mybatis/config/db.properties"/>
 	
+	<bean id="jepumService" class="com.tiger.service.JepumServiceImpl">
+	</bean>
+	
 	<bean id="tuserService" class="com.tiger.service.TuserServiceImpl">
 		<property name="tuserDao" ref="tuserDao"/>
 	</bean>	
@@ -19,6 +22,7 @@
 		<property name="codeGbDao" ref="codeGbDao"/>
 		<property name="lGroupCdDao" ref="lGroupCdDao"/>
 		<property name="mGroupCdDao" ref="mGroupCdDao"/>
+		<property name="pumjongDao" ref="pumjongDao"/>
 	</bean>	
 	<bean id="codeGbDao" class="com.tiger.dao.CodeGbDao">
 		<property name="session" ref="session"/>
@@ -27,6 +31,9 @@
 		<property name="session" ref="session"/>
 	</bean>
 	<bean id="mGroupCdDao" class="com.tiger.dao.MGroupCdDao">
+		<property name="session" ref="session"/>
+	</bean>	
+	<bean id="pumjongDao" class="com.tiger.dao.PumjongDao">
 		<property name="session" ref="session"/>
 	</bean>	
 	

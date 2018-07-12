@@ -5,10 +5,12 @@ import java.util.List;
 import com.tiger.dao.CodeGbDao;
 import com.tiger.dao.LGroupCdDao;
 import com.tiger.dao.MGroupCdDao;
+import com.tiger.dao.PumjongDao;
 import com.tiger.dao.TuserDao;
 import com.tiger.vo.CodeGb;
 import com.tiger.vo.LGroupCd;
 import com.tiger.vo.MGroupCd;
+import com.tiger.vo.Pumjong;
 
 public class CodeServiceImpl implements CodeService {
 	private CodeGbDao codeGbDao;	
@@ -24,6 +26,11 @@ public class CodeServiceImpl implements CodeService {
 	private MGroupCdDao mGroupCdDao;	
 	public void setMGroupCdDao(MGroupCdDao mGroupCdDao) {
 		this.mGroupCdDao = mGroupCdDao;
+	}
+	
+	private PumjongDao pumjongDao;	
+	public void setPumjongDao(PumjongDao pumjongDao) {
+		this.pumjongDao = pumjongDao;
 	}
 
 	@Override
@@ -102,9 +109,9 @@ public class CodeServiceImpl implements CodeService {
 	}
 
 	@Override
-	public List<LGroupCd> selectPumjongList() {
-		//pumjongDao.selectList();
-		return null;
+	public List<Pumjong> selectPumjongList() {
+		List<Pumjong> pumjongList = pumjongDao.selectList();
+		return pumjongList;
 	}
 
 }
