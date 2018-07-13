@@ -1,9 +1,11 @@
 package com.tiger.vo;
 
-import java.util.Date;
+import javax.validation.constraints.Pattern;
 
 public class Jepum {
-	private String jepum,brand,giYY,season,pum,jepumGb,majinGb,giGb,saipPanYN;
+	@Pattern(regexp="[가-힣]{2, 5}", message="한글 2 ~ 5")
+	private String jepum;
+	private String brand,giYY,season,pum,jepumGb,majinGb,giGb,saipPanYN;
 	private String jepumNm,fixDt,sojeGb,priceGb,sengHt,image,sizGroup,inUser;
 	private int giWonjaje,giBujaje,giImbong,giSobi,wonjaje,bujaje,imbong,won,sobi,giQty;
 	private String giIpgoDt,fIpgoDt,lIpgoDt,giPanDt,fPanDt,lPanDt,inDate;

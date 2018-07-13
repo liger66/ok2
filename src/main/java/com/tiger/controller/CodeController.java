@@ -116,7 +116,7 @@ public class CodeController {
 		
 		if (lGroupOne == null) {
 			codeService.insert(lGroup);
-			return "redirect:/code/gbList";
+			return "N";
 		} else {
 			System.out.println("not null : " + lGroupOne.getGubunCd() + " -- " + lGroupOne.getlGroupCd());
 			return "Y";

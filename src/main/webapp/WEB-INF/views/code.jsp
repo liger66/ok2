@@ -210,6 +210,7 @@
 			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
 		});
 	}
+	
 </script>
 
 <body>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tiger.service.CodeService;
 import com.tiger.service.TuserService;
+import com.tiger.vo.Jepum;
 import com.tiger.vo.LGroupCd;
 import com.tiger.vo.Pumjong;
 import com.tiger.vo.Tuser;
@@ -67,6 +68,8 @@ public class MainController {
 		
 		List<Pumjong> pumjongList = codeService.selectPumjongList();	
 		model.addAttribute("sPumjongList", pumjongList);
+		
+		model.addAttribute("jepum", new Jepum()); 
 				
 		return "/jepum.jsp";
 	}

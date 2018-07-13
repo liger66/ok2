@@ -1,13 +1,13 @@
 package com.tiger.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,5 +77,31 @@ public class JepumController {
 		//jepum.setGiPanDt(cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.MONTH)+"-"+cal.get(Calendar.DATE));
 		
 		return "/jepum.jsp";
+	}
+	
+	@RequestMapping(value="/jepum/insert", method=RequestMethod.POST)
+	public String insert(@ModelAttribute Jepum jepum, BindingResult result, Model model) {
+		model.addAttribute("mnew", false);
+		
+		System.out.println("jepum jepum   : " + jepum.getJepum());
+		System.out.println("jepum jepumNm : " + jepum.getJepumNm());
+		System.out.println("jepum jepumGb : " + jepum.getJepumGb());
+		/*if(true) {
+			FieldError error = new FieldError("dup", "jepum", "아이디가 중복됩니다");
+			result.addError(error);
+			
+		}*/
+		if(result.hasErrors()) {
+			model.addAttribute("jepum", jepum);
+			model.addAttribute("errors",result.getAllErrors());
+			return "/jepum.jsp";
+		}
+		//System.out.println("jepum : " + jepum);
+		
+		//model.addAttribute("msg", "서버오류");
+		//model.addAttribute("url", "/jepum");
+		return "/error.jsp";
+				
+		//return "/jepum.jsp";
 	}
 }
