@@ -12,5 +12,6 @@
     <mapper resource="mybatis/mapper/lGroupCd.xml"/>
     <mapper resource="mybatis/mapper/mGroupCd.xml"/>
     <mapper resource="mybatis/mapper/pumjong.xml"/>
+    <mapper resource="mybatis/mapper/jepum.xml"/>
   </mappers>
 </configuration>

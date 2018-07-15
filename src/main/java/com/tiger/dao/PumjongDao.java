@@ -16,5 +16,10 @@ public class PumjongDao {
 		
 		List<Pumjong> pumjongList = session.selectList("pumjong.selectList");		
 		return pumjongList;	
+	}
+
+	public Pumjong selectOne(Pumjong pum) {
+		Pumjong pumjong = session.selectOne("pumjong.selectOne", pum);
+		return pumjong;
 	}	
 }

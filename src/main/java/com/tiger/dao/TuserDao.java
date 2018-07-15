@@ -5,8 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.tiger.vo.Tuser;
 
 public class TuserDao {
-	private SqlSession session;
-	
+	private SqlSession session;	
 	public void setSession (SqlSession session) {
 		this.session = session;
 	}

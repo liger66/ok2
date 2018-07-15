@@ -44,35 +44,7 @@ public class MainController {
 	@RequestMapping("/login")
 	public String login() {
 		return "/login.jsp";
-	}
-	
-	@RequestMapping("/jepum")
-	public String jepum(Model model, HttpServletRequest request) {
-		System.out.println("123");
-		Tuser tUser = (Tuser) request.getSession().getAttribute("tuser");
-		if (tUser == null) {
-			System.out.println("no login ----------->");
-			return "L";
-		}
-		model.addAttribute("tUser", tUser);
-		
-		List<LGroupCd> lGroupCdList = codeService.selectLGroupCdList("BRAND");	
-		model.addAttribute("sBrandList", lGroupCdList);
-		
-		lGroupCdList = codeService.selectLGroupCdList("GIYY");		
-		model.addAttribute("sGiYYList", lGroupCdList);
-		
-		
-		lGroupCdList = codeService.selectLGroupCdList("SEASON");		
-		model.addAttribute("sSeasonList", lGroupCdList);
-		
-		List<Pumjong> pumjongList = codeService.selectPumjongList();	
-		model.addAttribute("sPumjongList", pumjongList);
-		
-		model.addAttribute("jepum", new Jepum()); 
-				
-		return "/jepum.jsp";
-	}
+	}	
 	
 	@RequestMapping("/login/in")
 	public String loginin(@RequestParam(required=false) String id, 
@@ -95,15 +67,5 @@ public class MainController {
 	@RequestMapping("/hello")
 	public String hello() {
 		return "/hello.jsp";
-	}
-	
-	@RequestMapping("/hello2")
-	public String hello2() {
-		return "/hello2.jsp";
-	}
-	
-	@RequestMapping("/hello3")
-	public String hello3() {
-		return "/hello3.jsp";
 	}
 }

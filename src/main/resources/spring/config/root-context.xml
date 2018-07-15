@@ -9,14 +9,15 @@
 	<context:property-placeholder location="classpath:mybatis/config/db.properties"/>
 	
 	<bean id="jepumService" class="com.tiger.service.JepumServiceImpl">
-	</bean>
+		<property name="jepumDao" ref="jepumDao"/>
+		<property name="lGroupCdDao" ref="lGroupCdDao"/>
+		<property name="pumjongDao" ref="pumjongDao"/>
+		<property name="codeService" ref="codeService"/>
+	</bean>	
 	
 	<bean id="tuserService" class="com.tiger.service.TuserServiceImpl">
 		<property name="tuserDao" ref="tuserDao"/>
-	</bean>	
-	<bean id="tuserDao" class="com.tiger.dao.TuserDao">
-		<property name="session" ref="session"/>
-	</bean>
+	</bean>		
 	
 	<bean id="codeService" class="com.tiger.service.CodeServiceImpl">
 		<property name="codeGbDao" ref="codeGbDao"/>
@@ -24,6 +25,10 @@
 		<property name="mGroupCdDao" ref="mGroupCdDao"/>
 		<property name="pumjongDao" ref="pumjongDao"/>
 	</bean>	
+	
+	<bean id="jepumDao" class="com.tiger.dao.JepumDao">
+		<property name="session" ref="session"/>
+	</bean>
 	<bean id="codeGbDao" class="com.tiger.dao.CodeGbDao">
 		<property name="session" ref="session"/>
 	</bean>
@@ -36,6 +41,9 @@
 	<bean id="pumjongDao" class="com.tiger.dao.PumjongDao">
 		<property name="session" ref="session"/>
 	</bean>	
+	<bean id="tuserDao" class="com.tiger.dao.TuserDao">
+		<property name="session" ref="session"/>
+	</bean>
 	
 	<bean id="session" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"/>

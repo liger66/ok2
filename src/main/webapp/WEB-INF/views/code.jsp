@@ -181,9 +181,8 @@
 
 		var gubunCd = $("#hgubunCd").val();
 		var lGroupCd = $(b).text();
-		alert("lGroupCd : " + lGroupCd);
+		
 		$("#hLGroupCd").val(lGroupCd);
-
 		$("#mGroupCd").val("");
 		$("#mGroupNm").val("");
 		$("#mOrderBy").val("");
@@ -191,10 +190,7 @@
 		$.ajax({
 			url : "${pageContext.request.contextPath}/code/mGroupList",
 			type : "POST",
-			data : {
-				gubunCd : gubunCd,
-				lGroupCd : lGroupCd
-			},
+			data : {gubunCd : gubunCd, lGroupCd : lGroupCd },
 			success : function(data) {
 				$("#mGroup").empty();
 				for (var i = 0; i < data.length; i++) {

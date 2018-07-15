@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jepum">
+	<select id="selectOne" resultType="jepum" parameterType="jepum">
+		select * from jepum where jepum = #{jepum}
+	</select>
+	
+	<select id="selectList" resultType="jepum" parameterType="jepum">
+		select * from jepum 
+				 where  brand = #{brand}
+				 and    giYY =  #{giYY}
+				 and    season =  #{season}
+	<!--  		<if test="#{pum} != 'all'">
+			         and  pum = #{pum}
+				</if>  -->	
+				order by jepum
+	</select>
+	
+	<insert id="insert" parameterType="jepum">
+		insert into jepum values (#{jepum}, #{brand}, #{giYY}, #{season}, #{pum}, #{jepumGb}, #{majinGb},
+								  #{giGb}, #{saipPanYN}, #{jepumNm}, #{giWonjaje}, #{giBujaje}, #{giImbong},
+								  #{giSobi}, #{wonjaje}, #{bujaje}, #{imbong}, #{won}, #{sobi}, #{fixDt},
+								  #{sojeGb}, #{priceGb}, #{sengHt}, #{giQty}, #{giIpgoDt}, #{fIpgoDt}, 
+								  #{lIpgoDt}, #{giPanDt}, #{fPanDt}, #{lPanDt}, #{image}, #{sizGroup}, 
+								  #{inUser}, sysdate )
+	</insert>
+</mapper>
+

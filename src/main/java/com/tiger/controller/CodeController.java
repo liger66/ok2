@@ -42,7 +42,7 @@ public class CodeController {
 	@RequestMapping(value="/code/insertGb", method=RequestMethod.POST)
 	public String insertGb(@RequestParam(required=false) String gubunCd, 
 						   @RequestParam(required=false) String gubunNm) {
-		gubunCd = gubunCd.toUpperCase();	
+		gubunCd = gubunCd.toUpperCase();
 		codeService.insert(gubunCd, gubunNm);
 		
 		return "redirect:/code/gbList";
@@ -71,7 +71,7 @@ public class CodeController {
 		
 		model.addAttribute("lGroupCdList", lGroupCdList);
 		
-		return lGroupCdList;		
+		return lGroupCdList;
 	}
 	
 	@ResponseBody
@@ -83,7 +83,7 @@ public class CodeController {
 		
 		model.addAttribute("mGroupCdList", mGroupCdList);
 		
-		return mGroupCdList;		
+		return mGroupCdList;
 	}
 	
 	@ResponseBody

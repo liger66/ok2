@@ -19,8 +19,6 @@ public class CodeGbDao {
 	}
 
 	public void insert(CodeGb codeGb) {
-		System.out.println("gubunCd : " + codeGb.getGubunCd() + " " + codeGb.getGubunCd().length());
-		System.out.println("gubunNm : " + codeGb.getGubunNm() + " " + codeGb.getGubunNm().length());
 		session.insert("codeGb.insert", codeGb);
 	}
 

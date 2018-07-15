@@ -9,8 +9,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- <bean class="com.tiger.controller.HelloController"/> -->
-	<bean id="mainController" class="com.tiger.controller.MainController">
-		<property name="tuserService" ref="tuserService"/>
+	<bean id="jepumController" class="com.tiger.controller.JepumController">
+		<property name="jepumService" ref="jepumService"/>
 		<property name="codeService" ref="codeService"/>
 	</bean>
 	
@@ -18,10 +18,10 @@
 		<property name="codeService" ref="codeService"/>
 	</bean>
 	
-	<bean id="jepumController" class="com.tiger.controller.JepumController">
-		<property name="jepumService" ref="jepumService"/>
+	<bean id="mainController" class="com.tiger.controller.MainController">
+		<property name="tuserService" ref="tuserService"/>
 		<property name="codeService" ref="codeService"/>
-	</bean>
+	</bean>	
 	
 	<mvc:annotation-driven/>
 	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
