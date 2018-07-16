@@ -38,6 +38,7 @@
 			success : function(data) {			
 				$("#jepum").val(data.jepum);
 				$("#jepumNm").val(data.jepumNm);
+				$("#giGb").val(data.giGb);
 				return "/jepum.jsp";
 			},
 			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
@@ -45,13 +46,43 @@
 	}
 
 	function insert() {
-		var form = document.getElementById("mainform");
-		form.submit();
+		var jepum = $("#jepum").val();
+		var giWonjaje = $("#giWonjaje").val();
+		var giBujaje = $("#giBujaje").val();
+		var giImbong = $("#giImbong").val();
+		var giSobi = $("#giSobi").val();
+		
+		if (jepum.length != 7) {
+			alert ("제품코드는 7 자리로 입력 합니다.");	return;
+		}
+		
+		if (isNaN(giWonjaje) || isNaN(giBujaje)  || isNaN(giImbong)) {
+			alert ("원가 사항은 숫자로 입력 합니다.");	return;
+		}
+		if (isNaN(giSobi)) {
+			alert ("소비자가를 숫자로 입력 합니다.");	return;
+		}
+		console.log("jepum:",jepum);
+		console.log("giWonjaje:",giWonjaje);
+		console.log("giBujaje:",giBujaje);
+		console.log("giImbong:",giImbong);
+		console.log("giSobi:",giSobi);
+		$.ajax({
+			url : "/jepum/checkData",
+			type : "GET",
+			data : {jepum:jepum, giWonjaje:giWonjaje, giBujaje:giBujaje, giImbong:giImbong, giSobi:giSobi},
+			success : function(data) {
+				if (data != "OK") {
+					alert (data);
+					return "/jepum.jsp";
+				} else {
+					var form = document.getElementById("mainform");
+					form.submit();
+				}				
+			},
+			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
+		});			
 	}
-	
-	<c:forEach var="error" items="${errors}">
-		alert("${error.defaultMessage}");
-	</c:forEach>
 	
 </script>
 <body>
@@ -60,7 +91,7 @@
 	<div class="col-sm-7">
 		<h3 class="title text-center">제품 코드 등록</h3>
 	</div>
-	<div class="col-sm-4" style="majin-right:0px; padding-right:0px; text-align: right; ">
+	<div class="col-sm-5" style="majin-right:0px; padding-right:0px; text-align: right; ">
 		<button type="button" id="btn_init" class="btn" onclick="init()">초기화</button>
 		<button type="button" id="btn_serch" class="btn btn-primary"
 				onclick="inquiry()">조회</button>
@@ -139,17 +170,14 @@
 	</div>
 	
 	<div class="container col-sm-9">
-		<f:form id="mainform" action="/jepum/insert" method="post" modelAttribute="jepum">
+		<form id="mainform" action="/jepum/insert" method="post" >
 			<div class="row">
 				<div class="form-group col-sm-4">
 					<div class="form-group form-inline ">
 						<label class="col-sm-6 hlabel">제품 코드</label>
-						<f:input path="jepum" class="form-control iup"
-							style="width:120px; font-weight:bold;" value="${jepum.jepum }" />
+						<input name="jepum" id="jepum" class="form-control iup"
+							   value="${jepum.jepum }" style="width:120px; font-weight:bold;">
 						<input type="hidden" name="hJepum" value="${hJepum}" >
-					</div>
-				 	<div class="text-center">
-						<f:errors path="jepum" class="error" />
 					</div>
 				</div>
 				<div class="form-group col-sm-8">
@@ -316,7 +344,7 @@
 					</tbody>
 				</table>
 			</div>
-		</f:form>
+		</form>
 	</div>
 
 </div>

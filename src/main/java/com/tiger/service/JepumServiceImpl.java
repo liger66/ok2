@@ -49,11 +49,15 @@ public class JepumServiceImpl implements JepumService {
 		String iPum = iJepum.substring(3,4);
 		String iSeq = iJepum.substring(4,7);
 		
-		System.out.println("brand : " + iBrand);
-		System.out.println("giyy  : " + iGiYY);
-		System.out.println("season: " + iSeason);
-		System.out.println("pumj  : " + iPum);
-		System.out.println("seq   : " + iSeq);
+		Jepum jep = new Jepum();
+		jep.setJepum(iJepum);		
+		Jepum jepum2 = jepumDao.selectOne(jep);
+		
+		if (jepum2 != null) {					
+			resultMap.put("msg", "제품코드가 이미 존재 합니다.");
+			System.out.println("error  jepum------------ ");
+			return resultMap;
+		}	
 		
 		LGroupCd lGroup = new LGroupCd();
 		lGroup.setGubunCd("BRAND");
@@ -122,16 +126,6 @@ public class JepumServiceImpl implements JepumService {
 			System.out.println("error  sobi------------ ");
 			return resultMap;
 		}
-		
-		Jepum jep = new Jepum();
-		jep.setJepum(iJepum);		
-		Jepum jepum2 = jepumDao.selectOne(jep);
-		
-		if (jepum2 != null) {					
-			resultMap.put("msg", "제품코드가 이미 존재 합니다.");
-			System.out.println("error  jepum------------ ");
-			return resultMap;
-		}	
 		
 		jepum.setBrand(iBrand);
 		jepum.setGiYY(iGiYY);
@@ -207,32 +201,7 @@ public class JepumServiceImpl implements JepumService {
 		model.addAttribute("sizGrList", lGroupCdList);
 		
 		lGroupCdList = codeService.selectLGroupCdList("SENGH");		
-		model.addAttribute("sengHtList", lGroupCdList);
-				
-		Calendar cal = Calendar.getInstance();
-		
-		cal.add(Calendar.MONTH, 2);
-		
-		String yy = String.valueOf(cal.get(Calendar.YEAR));
-		String mm = String.valueOf(cal.get(Calendar.MONTH));
-		String dd = String.valueOf(cal.get(Calendar.DATE));		
-		
-		if (mm.length() == 1) { mm = "0" + mm; }
-		if (dd.length() == 1) { dd = "0" + dd; }
-				
-		String ipgo = yy + "-" + mm + "-" + dd;	
-		model.addAttribute("giIpgoDt", ipgo);
-		
-		cal.add(Calendar.DATE, 7);
-		yy = String.valueOf(cal.get(Calendar.YEAR));
-		mm = String.valueOf(cal.get(Calendar.MONTH));
-		dd = String.valueOf(cal.get(Calendar.DATE));
-		
-		if (mm.length() == 1) { mm = "0" + mm; }
-		if (dd.length() == 1) { dd = "0" + dd; }
-		
-		String pan = yy + "-" + mm + "-" + dd;
-		model.addAttribute("giIpgoDt", pan);
+		model.addAttribute("sengHtList", lGroupCdList);				
 		
 		return model;
 	}
@@ -263,6 +232,11 @@ public class JepumServiceImpl implements JepumService {
 		
 		String pan = yy + "-" + mm + "-" + dd;
 		jepum.setGiPanDt(pan);
+		
+		jepum.setGiBujaje(0);
+		jepum.setGiWonjaje(0);
+		jepum.setGiImbong(0);
+		jepum.setGiSobi(0);
 		
 		return jepum;
 	}

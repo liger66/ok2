@@ -68,13 +68,38 @@ public class JepumController {
 		return "/jepum.jsp";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/jepum/checkData", method=RequestMethod.GET)
+	public String checkData(@RequestParam(required=false) String jepum,
+						  @RequestParam(required=false) int giWonjaje,
+						  @RequestParam(required=false) int giBujaje,
+						  @RequestParam(required=false) int giImbong,
+						  @RequestParam(required=false) int giSobi) {
+		System.out.println("jepum : " + jepum);
+		Jepum jep = new Jepum();
+		jepum = jepum.toUpperCase();
+		jep.setJepum(jepum);
+		jep.setGiWonjaje(giWonjaje);
+		jep.setGiBujaje(giBujaje);
+		jep.setGiImbong(giImbong);
+		jep.setGiSobi(giSobi);
+		
+		Map<String, Object>  resultMap = new HashMap<>();
+		resultMap = jepumService.checkInData(jep);
+		
+		String msg = "OK";
+		if (resultMap.get("errorYN") == "Y") {
+			msg = (String) resultMap.get("msg");
+		}
+		
+		return msg;
+	}
+	
 	@RequestMapping(value="/jepum/insert", method=RequestMethod.POST)
-	public String insert(@ModelAttribute Jepum jepum, BindingResult result, Model model, HttpServletRequest request) {
+	public String insert(@ModelAttribute Jepum jepum, Model model, HttpServletRequest request) {
 		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
 		if (tuser == null) {
 			System.out.println("no login ----------->");
-			FieldError error = new FieldError("dup", "jepum", "로그인 후 이용 가능 합니다.");
-			result.addError(error);
 		}
 		String userCd = tuser.getUserCd();
 		String jepumCd = jepum.getJepum().toUpperCase();
@@ -85,20 +110,12 @@ public class JepumController {
 		
 		Map<String, Object>  resultMap = new HashMap<>();
 		
-		resultMap = jepumService.checkInData(jepum);	
+		resultMap = jepumService.checkInData(jepum);
 		
-		if(resultMap.get("errorYN") == "Y") {
+		if (resultMap.get("errorYN") == "Y") {
 			String msg = (String) resultMap.get("msg");
-			FieldError error = new FieldError("dup", "jepum", msg);
-			result.addError(error);
 			System.out.println("error msg : " + msg);
 			return "/jepum.jsp";
-		}
-		
-		if(result.hasErrors()) {
-			model.addAttribute("errors",result.getAllErrors());
-			System.out.println("error count : " + result.getErrorCount());
-			//return "/jepum.jsp";
 		}
 		
 		model.addAttribute("brandNm", resultMap.get("brandNm"));
@@ -160,5 +177,5 @@ public class JepumController {
 		jepum = jepumService.selectOne(jep);
 		
 		return jepum;
-	}
+	}	
 }

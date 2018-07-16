@@ -3,16 +3,15 @@ package com.tiger.vo;
 import javax.validation.constraints.Pattern;
 
 public class Jepum {
-	@Pattern(regexp="[A~Z,0~9]{7}", message="제품코드 를 7자리로 입력 하세요.")
+	@Pattern(regexp="[A~Z0~9]{7}", message="제품코드 를 7자리로 입력 하세요.")
 	private String jepum;
-	
-	@Pattern(regexp="^[0-9]+$", message="원가 및 소비자가는 숫자만 입력 합니다.")
+	@Pattern(regexp="/^(0|[1-9][0-9]*)$/", message="원가 및 소비자가는 숫자만 입력 합니다.")
 	private int giWonjaje;
-	@Pattern(regexp="^[0-9]+$", message="원가 및 소비자가는 숫자만 입력 합니다.")
+	@Pattern(regexp="/^(0|[1-9][0-9]*)$/", message="원가 및 소비자가는 숫자만 입력 합니다.")
 	private int giBujaje;
-	@Pattern(regexp="^[0-9]+$", message="원가 및 소비자가는 숫자만 입력 합니다.")
+	@Pattern(regexp="/^(0|[1-9][0-9]*)$/", message="원가 및 소비자가는 숫자만 입력 합니다.")
 	private int giImbong;
-	@Pattern(regexp="^[0-9]+$", message="원가 및 소비자가는 숫자만 입력 합니다.")
+	@Pattern(regexp="/^(0|[1-9][0-9]*)$/", message="원가 및 소비자가는 숫자만 입력 합니다.")
 	private int giSobi;
 	
 	private String brand,giYY,season,pum,jepumGb,majinGb,giGb,saipPanYN;
