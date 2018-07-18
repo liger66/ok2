@@ -62,30 +62,38 @@ public class JepumController {
 		Model mod = jepumService.getMainHead(model);
 		model = mod;
 		
-		Jepum jep = jepumService.getMainHead2(jepum);		
+		Jepum jep = jepumService.getMainHead2(jepum);
+		
 		jepum = jep;
 				
 		return "/jepum.jsp";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/jepum/checkData", method=RequestMethod.GET)
-	public String checkData(@RequestParam(required=false) String jepum,
-						  @RequestParam(required=false) int giWonjaje,
-						  @RequestParam(required=false) int giBujaje,
-						  @RequestParam(required=false) int giImbong,
-						  @RequestParam(required=false) int giSobi) {
-		System.out.println("jepum : " + jepum);
-		Jepum jep = new Jepum();
-		jepum = jepum.toUpperCase();
-		jep.setJepum(jepum);
-		jep.setGiWonjaje(giWonjaje);
-		jep.setGiBujaje(giBujaje);
-		jep.setGiImbong(giImbong);
-		jep.setGiSobi(giSobi);
+	@RequestMapping(value="/jepum/change", method=RequestMethod.POST )
+	public String change(@ModelAttribute Jepum jepum, Model model) throws ParseException {
+		System.out.println("in change -----------------");
+		jepum.setJepum(jepum.getJepum().toUpperCase());
 		
 		Map<String, Object>  resultMap = new HashMap<>();
-		resultMap = jepumService.checkInData(jep);
+		resultMap = jepumService.jepumChange(jepum);
+		
+		model.addAttribute("brandNm", resultMap.get("brandNm"));
+		model.addAttribute("giYYNm", resultMap.get("giYYNm"));
+		model.addAttribute("seasonNm", resultMap.get("seasonNm"));
+		model.addAttribute("pumNm", resultMap.get("pumNm"));	
+		System.out.println("before return change -----------------");	
+		return  "/jepum.jsp";
+	}
+	
+	// , produces="application/json; charset=utf-8"
+	@ResponseBody
+	@RequestMapping(value="/jepum/checkData", method=RequestMethod.POST, produces="text/plain; charset=utf-8" )
+	public String checkData(@ModelAttribute Jepum jepum) {
+		System.out.println("in  check data -----------");
+		jepum.setJepum(jepum.getJepum().toUpperCase());
+		
+		Map<String, Object>  resultMap = new HashMap<>();
+		resultMap = jepumService.checkInData(jepum);
 		
 		String msg = "OK";
 		if (resultMap.get("errorYN") == "Y") {
@@ -97,6 +105,8 @@ public class JepumController {
 	
 	@RequestMapping(value="/jepum/insert", method=RequestMethod.POST)
 	public String insert(@ModelAttribute Jepum jepum, Model model, HttpServletRequest request) {
+		System.out.println("insert in : " + jepum.getJepum());
+		
 		Tuser tuser = (Tuser) request.getSession().getAttribute("tuser");
 		if (tuser == null) {
 			System.out.println("no login ----------->");
@@ -125,16 +135,18 @@ public class JepumController {
 		model.addAttribute("hJepum", jepum.getJepum());
 		
 		jepum = (Jepum) resultMap.get("jepum");
-		System.out.println("insert jepum : " + jepum);
 		
 		jepumService.insert(jepum);
+		
+		Model mod = jepumService.getSerchHead(model);
+		model = mod;
 		
 		return "/jepum.jsp";
 				
 		//return "redirect:/jepum/list";
 	}
 	
-	@RequestMapping(value="/jepum/list", method=RequestMethod.POST)
+	@RequestMapping(value="/jepum/list", method=RequestMethod.GET)
 	public String jpList(@ModelAttribute Jepum jepum,  Model model,
 						 @RequestParam(required=false) String sBrand, 
 			   			 @RequestParam(required=false) String sGiYY,

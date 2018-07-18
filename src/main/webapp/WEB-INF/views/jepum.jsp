@@ -16,11 +16,11 @@
 
 <script type="text/javascript">
 	function init() {
-		location.href = "${pageContext.request.contextPath}/jepum";
+		location.href = "/jepum";
 	}
 
 	function mnew() {
-		location.href = "${pageContext.request.contextPath}/jepum/mnew";
+		location.href = "/jepum/mnew";
 	}
 	
 	function inquiry() {
@@ -28,11 +28,31 @@
 		form.submit();
 	}
 	
+	function jepumChange() {
+		var jepum  = $("#jepum").val();
+		$.ajax({url : "/jepum/change",
+				type : "POST",
+				data : {jepum : jepum},
+				success : function(data) {
+					/* alert ("change : " + data.brandNm);
+					$("#brandNm").val(data.brandNm);
+					$("#giYYNm").val(data.giYYNm);
+					$("#seasonNm").val(data.seasonNm);
+					$("#pumNm").val(data.pumNm);
+					return; */
+			},
+			error : function(err) {
+				console.log (err);
+				alert("DB 작업중 에러, 시스템에 문의 하세요.");
+			}
+		});
+	}
+	
 	function selectJepum(b) {
 		var sJepum = $(b).text();
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/jepum/selectJepum",
+			url : "/jepum/selectJepum",
 			type : "POST",
 			data : {sJepum : sJepum},
 			success : function(data) {			
@@ -41,11 +61,26 @@
 				$("#giGb").val(data.giGb);
 				return "/jepum.jsp";
 			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
+			error : function(err) {
+				console.log (err);
+				alert("DB 작업중 에러, 시스템에 문의 하세요.");
+			}
 		});
 	}
 
 	function insert() {
+		if ($("#giWonjaje").val() == "") { $("#giWonjaje").val(0); }
+		if ($("#giBujaje").val() == "" ) { $("#giBujaje").val(0); }
+		if ($("#giImbong").val() == "")  { $("#giImbong").val(0); }
+		if ($("#giSobi").val() == "")    { $("#giSobi").val(0); }
+		
+		$("#wonjaje").val(0);
+		$("#bujaje").val(0);
+		$("#imbong").val(0);
+		$("#sobi").val(0);
+		$("#won").val(0);
+		$("#giWon").val(0);
+		
 		var jepum = $("#jepum").val();
 		var giWonjaje = $("#giWonjaje").val();
 		var giBujaje = $("#giBujaje").val();
@@ -62,25 +97,25 @@
 		if (isNaN(giSobi)) {
 			alert ("소비자가를 숫자로 입력 합니다.");	return;
 		}
-		console.log("jepum:",jepum);
-		console.log("giWonjaje:",giWonjaje);
-		console.log("giBujaje:",giBujaje);
-		console.log("giImbong:",giImbong);
-		console.log("giSobi:",giSobi);
+		
 		$.ajax({
 			url : "/jepum/checkData",
-			type : "GET",
+			type : "POST",
 			data : {jepum:jepum, giWonjaje:giWonjaje, giBujaje:giBujaje, giImbong:giImbong, giSobi:giSobi},
 			success : function(data) {
 				if (data != "OK") {
 					alert (data);
-					return "/jepum.jsp";
+					return;
 				} else {
+					alert ("check ok-----------------");
 					var form = document.getElementById("mainform");
 					form.submit();
-				}				
+				}		
 			},
-			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }
+			error : function(err) {
+				console.log (err);
+				alert("12 작업중 에러, 시스템에 문의 하세요."); 
+			}
 		});			
 	}
 	
@@ -108,7 +143,7 @@
 
 <div>
 	<div class="container col-sm-3">
-		<form id="serchform" action="/jepum/list" method="post" class="form-horizontal ">
+		<form id="serchform" action="/jepum/list" method="get" class="form-horizontal ">
 			<div class="form-group form-inline">
 				<label class="col-sm-6 control-label">브랜드 코드</label> 
 				<select id="sBrand" name="sBrand" class="form-control" style="width: 120px;">
@@ -170,19 +205,19 @@
 	</div>
 	
 	<div class="container col-sm-9">
-		<form id="mainform" action="/jepum/insert" method="post" >
-			<div class="row">
+		<form id="mainform" action="${pageContext.request.contextPath}/jepum/insert" method="post" >
+			<div class="row">  
 				<div class="form-group col-sm-4">
 					<div class="form-group form-inline ">
 						<label class="col-sm-6 hlabel">제품 코드</label>
-						<input name="jepum" id="jepum" class="form-control iup"
+						<input name="jepum" id="jepum" class="form-control iup" 
 							   value="${jepum.jepum }" style="width:120px; font-weight:bold;">
 						<input type="hidden" name="hJepum" value="${hJepum}" >
 					</div>
 				</div>
 				<div class="form-group col-sm-8">
 					<div class="form-group form-inline ">
-						<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm"
+						<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" onchange="jepumChange()"
 							   name="jepumNm" class="form-control" style="width: 300px;">
 					</div>
 				</div>
@@ -308,10 +343,10 @@
 					<tbody>
 						<tr>
 							<td class="text-c tbcolor pt13">원자재 비</td>
-							<td><input id="giWonjaje" name="giWonjaje" class="form-control" style="width: 160px;" 
-								value="${giWonjaje }"></td>
-							<td><input id="wonjaje" name="wonjaje" class="form-control" style="width: 160px;" 
-								value="${wonjaje }" readonly="readonly"></td>
+							<td><input id="giWonjaje" name="giWonjaje" class="form-control" style="width: 160px;"
+								<fmt:formatNumber value="${giWonjaje}" pattern="#,###,###"/>> </td>
+							<td><input id="wonjaje" name="wonjaje" class="form-control" style="width: 160px;" readonly="readonly"
+								<fmt:formatNumber value="${wonjaje}" pattern="#,###,###"/>> </td>
 						</tr>
 						<tr>
 							<td class="text-c tbcolor pt13">부자재 비</td>

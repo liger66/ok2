@@ -10,6 +10,7 @@ import com.tiger.vo.Jepum;
 public interface JepumService {
 
 	Map<String, Object> checkInData(Jepum jepum);
+	Map<String, Object> jepumChange(Jepum jepum);
 
 	void insert(Jepum jepum);
 
@@ -21,6 +22,5 @@ public interface JepumService {
 
 	Jepum getMainHead2(Jepum jepum);
 
-	Jepum selectOne(Jepum jep);
-	
+	Jepum selectOne(Jepum jep);	
 }

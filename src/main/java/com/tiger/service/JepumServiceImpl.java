@@ -88,7 +88,7 @@ public class JepumServiceImpl implements JepumService {
 			resultMap.put("msg", "제품코드 3번째 자리는  시즌코드를 입력 합니다.");
 			System.out.println("error  season------------ ");
 			return resultMap;
-		}	else { resultMap.put("seasonNm", lGroupCd.getlGroupNm());	}
+		}	else { resultMap.put("seasonNm", lGroupCd.getlGroupNm());}
 		
 		Pumjong pum = new Pumjong();
 		pum.setPumCd(iPum);		
@@ -99,12 +99,7 @@ public class JepumServiceImpl implements JepumService {
 			System.out.println("error  pumjong------------ ");
 			return resultMap;
 		} 	else { resultMap.put("pumNm", pumjong.getPumNm());	}
-		/*
-		if (iSeq < "000" || iSeq > "999") {
-			resultMap.put("errorYN", "Y");
-			resultMap.put("msg", "제품코드 마지막 3 자리는 숫자를 입력 합니다.");
-			return resultMap;
-		}	*/
+		
 		/*
 		if (jepum.getGiIpgoDt() < jepum.getGiPanDt()) {
 			resultMap.put("errorYN", "Y");
@@ -146,10 +141,10 @@ public class JepumServiceImpl implements JepumService {
 		
 		resultMap.put("errorYN", "N");
 		resultMap.put("jepum", jepum);	
-
+		
 		return resultMap;
 	}
-
+	
 	@Override
 	public void insert(Jepum jepum) {
 		jepumDao.insert(jepum);		
@@ -238,6 +233,12 @@ public class JepumServiceImpl implements JepumService {
 		jepum.setGiImbong(0);
 		jepum.setGiSobi(0);
 		
+		jepum.setBujaje(0);
+		jepum.setWonjaje(0);
+		jepum.setImbong(0);
+		jepum.setSobi(0);
+		jepum.setWon(0);
+		
 		return jepum;
 	}
 
@@ -245,6 +246,50 @@ public class JepumServiceImpl implements JepumService {
 	public Jepum selectOne(Jepum jep) {
 		Jepum jepum = jepumDao.selectOne(jep);
 		return jepum;
+	}
+
+	@Override
+	public Map<String, Object> jepumChange(Jepum jepum) {
+		Map<String, Object>  resultMap = new HashMap<>();
+		resultMap.put("errorYN", "Y");
+		
+		String iJepum = jepum.getJepum();
+		System.out.println("jepum : " + iJepum);
+		
+		String iBrand = iJepum.substring(0,1);
+		String iGiYY = iJepum.substring(1,2);
+		String iSeason = iJepum.substring(2,3);
+		String iPum = iJepum.substring(3,4);
+		
+		LGroupCd lGroup = new LGroupCd();
+		lGroup.setGubunCd("BRAND");
+		lGroup.setlGroupCd(iBrand);		
+		LGroupCd lGroupCd = lGroupCdDao.selectOne(lGroup);		
+		
+		if (lGroupCd != null) { resultMap.put("brandNm", lGroupCd.getlGroupNm());	}
+		
+		lGroup.setGubunCd("GIYY");
+		lGroup.setlGroupCd(iGiYY);		
+		lGroupCd = lGroupCdDao.selectOne(lGroup);
+		
+		if (lGroupCd != null) { resultMap.put("giYYNm", lGroupCd.getlGroupNm());	}
+		
+		lGroup.setGubunCd("SEASON");
+		lGroup.setlGroupCd(iSeason);		
+		lGroupCd = lGroupCdDao.selectOne(lGroup);		
+		
+		if (lGroupCd != null) { resultMap.put("seasonNm", lGroupCd.getlGroupNm()); }
+		
+		Pumjong pum = new Pumjong();
+		pum.setPumCd(iPum);		
+		Pumjong pumjong = pumjongDao.selectOne(pum);
+		
+		if (pumjong != null) { resultMap.put("pumNm", pumjong.getPumNm());	}	
+				
+		resultMap.put("errorYN", "N");
+		resultMap.put("jepum", jepum);	
+		
+		return resultMap;
 	}
 	
 }
