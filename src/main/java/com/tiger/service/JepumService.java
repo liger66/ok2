@@ -22,5 +22,7 @@ public interface JepumService {
 
 	Jepum getMainHead2(Jepum jepum);
 
-	Jepum selectOne(Jepum jep);	
+	Jepum selectOne(Jepum jep);
+	
+	Map<String, Object> getJepumDetl(Jepum jepum);	
 }

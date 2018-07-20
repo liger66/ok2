@@ -12,9 +12,9 @@
 				 where  brand = #{brand}
 				 and    giYY =  #{giYY}
 				 and    season =  #{season}
-	<!--  		<if test="#{pum} != 'all'">
+		  		<if test="pum != 'all'">
 			         and  pum = #{pum}
-				</if>  -->	
+				</if>
 				order by jepum
 	</select>
 	

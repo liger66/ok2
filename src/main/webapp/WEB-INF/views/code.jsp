@@ -123,12 +123,10 @@
 			},
 			success : function(data) {
 				if (data == "L") {
-					alert("Login 후 사용 합니다.");
-					return;
+					alert("Login 후 사용 합니다."); return;
 				}
 				if (data == "Y") {
-					alert("중복된 코드가 있습니다.");
-					return;
+					alert("중복된 코드가 있습니다."); return;
 				}
 			},
 			error : function() { alert("DB 작업중 에러, 시스템에 문의 하세요."); }

@@ -25,4 +25,5 @@ public interface CodeService {
 	MGroupCd selectMGroupOne(MGroupCd mGroup);
 	
 	List<Pumjong> selectPumjongList();
+	Pumjong selectPumjongOne(Pumjong pum);
 }

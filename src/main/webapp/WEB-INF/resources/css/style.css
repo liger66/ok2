@@ -3,6 +3,7 @@
 
 .text-c {text-align: center;}
 .text-l {text-align: left;}
+.text-rp {text-align:right; padding-right: 30px;}
 .title{
 	text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
 	color: rgba(0,0,255,0.7);
@@ -11,10 +12,12 @@
 	margin:0 auto;
 }
 .table-fix {
-    display: block;    
-    overflow-y: auto; 
+    display: block;
+    overflow-y: auto;
+    width: 100%;
 }
 .table-max540 { max-height:540px; }
+.table-max400 { max-height:400px; }
 .table tbody > tr > td > input { height:25px;}
 .hlabel { font-size:15px; padding-top:7px; text-align:right; }
 .htext { width:50px; font-size:15px; }
@@ -24,10 +27,10 @@
 
 
 .table-fixed thead {
-  width: 97%;
+  width: 100%;
 }
 .table-fixed tbody {
-  height: 230px;
+  height: 500px;
   overflow-y: auto;
   width: 100%;
 }
@@ -37,6 +40,16 @@
 .table-fixed tbody td, .table-fixed thead > tr> th {
   float: left;
   border-bottom-width: 0;
+}
+
+
+.table-f {
+    display: block;
+}
+.table-f tbody {
+    display: block;
+    overflow-y: auto;
+    max-height:400px;
 }
 
 

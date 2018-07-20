@@ -114,4 +114,9 @@ public class CodeServiceImpl implements CodeService {
 		return pumjongList;
 	}
 
+	@Override
+	public Pumjong selectPumjongOne(Pumjong pum) {
+		Pumjong pumjong = pumjongDao.selectOne(pum);
+		return pumjong;
+	}
 }

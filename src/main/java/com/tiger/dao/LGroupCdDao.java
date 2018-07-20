@@ -21,13 +21,16 @@ public class LGroupCdDao {
 	}
 
 	public void insert(LGroupCd lGroupCd) {
-		System.out.println("dao insert------------- : " + lGroupCd.getlGroupCd());
 		session.insert("lGroupCd.insert", lGroupCd);
 	}
 
 	public LGroupCd selectOne(LGroupCd lGroup) {
-		System.out.println("dao selectOne ------------- : " + lGroup.getlGroupCd());
 		LGroupCd lGroupCd = session.selectOne("lGroupCd.selectOne", lGroup);
 		return lGroupCd;
+	}
+
+	public List<LGroupCd> selectListOne(LGroupCd lgCd) {
+		List<LGroupCd>  lGroupCdList = session.selectList("lGroupCd.selectOne", lgCd);
+		return lGroupCdList;
 	}
 }

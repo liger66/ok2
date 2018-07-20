@@ -35,7 +35,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">제품정보 관리 <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/jepum">제품 정보 등록</a></li>
-          <li><a href="#">생산지시 등록</a></li>
+          <li><a href="/sengJi">생산지시 등록</a></li>
           <li><a href="#">제품가격 확정 등록</a></li>
           <li><a href="#">할인 정보 등록</a></li>
           <li><a href="#">제품 실적 현황</a></li>

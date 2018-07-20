@@ -1,7 +1,7 @@
 package com.tiger.controller;
 
 import java.text.ParseException;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tiger.service.CodeService;
 import com.tiger.service.JepumService;
-import com.tiger.vo.CodeGb;
 import com.tiger.vo.Jepum;
-import com.tiger.vo.LGroupCd;
-import com.tiger.vo.Pumjong;
 import com.tiger.vo.Tuser;
 
 @Controller
@@ -70,19 +65,14 @@ public class JepumController {
 	}
 	
 	@RequestMapping(value="/jepum/change", method=RequestMethod.POST )
-	public String change(@ModelAttribute Jepum jepum, Model model) throws ParseException {
-		System.out.println("in change -----------------");
+	@ResponseBody
+	public Map<String, Object> change(@ModelAttribute Jepum jepum, Model model) throws ParseException {
 		jepum.setJepum(jepum.getJepum().toUpperCase());
 		
 		Map<String, Object>  resultMap = new HashMap<>();
 		resultMap = jepumService.jepumChange(jepum);
 		
-		model.addAttribute("brandNm", resultMap.get("brandNm"));
-		model.addAttribute("giYYNm", resultMap.get("giYYNm"));
-		model.addAttribute("seasonNm", resultMap.get("seasonNm"));
-		model.addAttribute("pumNm", resultMap.get("pumNm"));	
-		System.out.println("before return change -----------------");	
-		return  "/jepum.jsp";
+		return  resultMap;
 	}
 	
 	// , produces="application/json; charset=utf-8"
@@ -141,9 +131,10 @@ public class JepumController {
 		Model mod = jepumService.getSerchHead(model);
 		model = mod;
 		
-		return "/jepum.jsp";
-				
+		//return "/jepum.jsp";				
 		//return "redirect:/jepum/list";
+		return String.format("redirect:/jepum/list?sBrand=%s&sGiYY=%s&sSeason=%s&sPumjong=%s",
+							jepum.getBrand(), jepum.getGiYY(), jepum.getSeason(), jepum.getPum());
 	}
 	
 	@RequestMapping(value="/jepum/list", method=RequestMethod.GET)
@@ -179,15 +170,33 @@ public class JepumController {
 	
 	@ResponseBody
 	@RequestMapping(value="/jepum/selectJepum", method=RequestMethod.POST)
-	public Jepum selectJepum(@ModelAttribute Jepum jepum,
+	public Map<String, Object> selectJepum(@ModelAttribute Jepum jepum,
 						 	  @RequestParam(required=false) String sJepum) {
-		System.out.println("sjepum : " + sJepum);
+		System.out.println("jepum in sjepum : " + sJepum);
+		
+		Map<String, Object>  resultMap = new HashMap<>();
 		
 		Jepum jep = new Jepum();
 		jep.setJepum(sJepum);
 		
 		jepum = jepumService.selectOne(jep);
 		
-		return jepum;
-	}	
+		resultMap = (Map<String, Object>) jepumService.getJepumDetl(jepum);
+		
+		//String dt = jepum.getGiIpgoDt().format("yyyy-mm-dd");
+		//System.out.println("---------------- " + dt);
+		//jepum.setGiIpgoDt(jepum.getGiIpgoDt().format("yyyy-mm-dd"));
+		
+		//SimpleDateFormat  dt =  new SimpleDateFormat("yyyy-mm-dd");
+		//jepum.setGiIpgoDt(dt.format(jepum.getGiIpgoDt()) );
+		
+		String dt = jepum.getGiIpgoDt().substring(0, 10);
+		jepum.setGiIpgoDt(dt);
+		dt = jepum.getGiPanDt().substring(0, 10);
+		jepum.setGiPanDt(dt);
+		
+		resultMap.put("jepum", jepum);
+		
+		return resultMap;
+	}
 }

@@ -9,6 +9,12 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- <bean class="com.tiger.controller.HelloController"/> -->
+	<bean id="sengJiController" class="com.tiger.controller.SengJiController">
+		<property name="sengJiService" ref="sengJiService"/>
+		<property name="jepumService" ref="jepumService"/>
+		<property name="codeService" ref="codeService"/>
+	</bean>
+	
 	<bean id="jepumController" class="com.tiger.controller.JepumController">
 		<property name="jepumService" ref="jepumService"/>
 		<property name="codeService" ref="codeService"/>

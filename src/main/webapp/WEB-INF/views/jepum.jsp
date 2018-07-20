@@ -30,16 +30,32 @@
 	
 	function jepumChange() {
 		var jepum  = $("#jepum").val();
+		var tx1 = "<option value='";
+		var tx2 = "'>";
+		var tx3 = "</option>";
 		$.ajax({url : "/jepum/change",
 				type : "POST",
 				data : {jepum : jepum},
 				success : function(data) {
-					/* alert ("change : " + data.brandNm);
+					if (data.errorYN == "Y") { alert (data.msg); }
 					$("#brandNm").val(data.brandNm);
 					$("#giYYNm").val(data.giYYNm);
 					$("#seasonNm").val(data.seasonNm);
 					$("#pumNm").val(data.pumNm);
-					return; */
+					
+					var txall = tx1 + data.sBrand + tx2 + data.brandNm + tx3;
+					$("#sBrand").append(txall);
+					
+					txall = tx1 + data.sGiYY + tx2 + data.giYYNm + tx3;
+					$("#sGiYY").append(txall);
+					
+					txall = tx1 + data.sSeason + tx2 + data.seasonNm + tx3;
+					$("#sSeason").append(txall);
+					
+					txall = tx1 + data.sPum + tx2 + data.pumNm + tx3;
+					$("#sPumjong").append(txall);
+					
+					return;
 			},
 			error : function(err) {
 				console.log (err);
@@ -55,15 +71,65 @@
 			url : "/jepum/selectJepum",
 			type : "POST",
 			data : {sJepum : sJepum},
-			success : function(data) {			
-				$("#jepum").val(data.jepum);
-				$("#jepumNm").val(data.jepumNm);
-				$("#giGb").val(data.giGb);
-				return "/jepum.jsp";
+			success : function(data) {		
+				$("#jepum").val(data.jepum.jepum);
+				$("#jepumNm").val(data.jepum.jepumNm);
+				$("#saipPanYN").val(data.jepum.saipPanYN);
+				$("#giWonjaje").val(data.jepum.giWonjaje.toLocaleString());
+				$("#giBujaje").val(data.jepum.giBujaje.toLocaleString());
+				$("#giImbong").val(data.jepum.giImbong.toLocaleString());
+				$("#giSobi").val(data.jepum.giSobi.toLocaleString());
+				$("#won").val(data.jepum.won.toLocaleString());
+				$("#giWon").val(data.jepum.won.toLocaleString());
+				$("#wonjaje").val(data.jepum.wonjaje.toLocaleString());
+				$("#bujaje").val(data.jepum.bujaje.toLocaleString());
+				$("#imbong").val(data.jepum.imbong.toLocaleString());
+				$("#sobi").val(data.jepum.sobi.toLocaleString());
+				
+				$("#giIpgoDt").val(data.jepum.giIpgoDt);
+				$("#giPanDt").val(data.jepum.giPanDt);				
+				
+				$("#brandNm").val(data.brandNm);
+				$("#giYYNm").val(data.giYYNm);
+				$("#seasonNm").val(data.seasonNm);
+				$("#pumNm").val(data.pumNm);
+				
+				var tx1 = "<option>";
+				var tx2 = "</option>";
+				
+				var txall = tx1 + data.jepumGb + tx2;
+				$("#jepumGb").empty();
+				$("#jepumGb").append(txall);
+				
+				txall = tx1 + data.majinGb + tx2;
+				$("#majinGb").empty();
+				$("#majinGb").append(txall);
+				
+				txall = tx1 + data.giGb + tx2;
+				$("#giGb").empty();
+				$("#giGb").append(txall);
+				
+				txall = tx1 + data.sojeGb + tx2;
+				$("#sojeGb").empty();
+				$("#sojeGb").append(txall);
+				
+				txall = tx1 + data.priceGb + tx2;
+				$("#priceGb").empty();
+				$("#priceGb").append(txall);
+				
+				txall = tx1 + data.sizGroup + tx2;
+				$("#sizGroup").empty();
+				$("#sizGroup").append(txall);
+				
+				txall = tx1 + data.sengHt + tx2;
+				$("#sengHt").empty();
+				$("#sengHt").append(txall);
+				
+				return;
 			},
 			error : function(err) {
 				console.log (err);
-				alert("DB 작업중 에러, 시스템에 문의 하세요.");
+				alert("DB 작업중 에러(1), 시스템에 문의 하세요.");
 			}
 		});
 	}
@@ -107,7 +173,6 @@
 					alert (data);
 					return;
 				} else {
-					alert ("check ok-----------------");
 					var form = document.getElementById("mainform");
 					form.submit();
 				}		
@@ -118,6 +183,7 @@
 			}
 		});			
 	}
+	
 	
 </script>
 <body>
@@ -173,17 +239,16 @@
 			</div>
 			<div class="form-group form-inline">
 				<label class="col-sm-6 control-label">품 종</label> <select
-					id="sPumjong" name="sPumjong" class="form-control"
-					style="width: 120px;">
-					<option value="all" selected>전체</option>
+					   id="sPumjong" name="sPumjong" class="form-control" style="width: 120px;">
+					<option value="all">전체</option>
 					<c:forEach var="sp" items="${sPumjongList }">
 						<option value="${sp.pumCd}">${sp.pumNm}</option>
 					</c:forEach>
 				</select>
 			</div>
 		</form>
-
-		<table class="table table-bordered">
+		<div style="overflow-y:auto; max-height:460px;">
+		<table class="table table-bordered ">
 			<thead>
 				<tr>
 					<th class="text-center col-sm-6">제품코드</th>
@@ -202,6 +267,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 	</div>
 	
 	<div class="container col-sm-9">
@@ -210,14 +276,14 @@
 				<div class="form-group col-sm-4">
 					<div class="form-group form-inline ">
 						<label class="col-sm-6 hlabel">제품 코드</label>
-						<input name="jepum" id="jepum" class="form-control iup" 
+						<input name="jepum" id="jepum" class="form-control iup" onchange="jepumChange()"
 							   value="${jepum.jepum }" style="width:120px; font-weight:bold;">
 						<input type="hidden" name="hJepum" value="${hJepum}" >
 					</div>
 				</div>
 				<div class="form-group col-sm-8">
 					<div class="form-group form-inline ">
-						<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" onchange="jepumChange()"
+						<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" 
 							   name="jepumNm" class="form-control" style="width: 300px;">
 					</div>
 				</div>
@@ -315,7 +381,7 @@
 				<div class="form-group form-inline ">
 					<label class="col-sm-6 hlabel">사입판매여부</label> 
 					<select id="saipPanYN" name="saipPanYN" class="form-control" style="width: 120px;">
-						<option value="N" selected>No</option>
+						<option value="N">No</option>
 						<option value="Y">Yes</option>
 					</select>
 				</div>
@@ -343,38 +409,38 @@
 					<tbody>
 						<tr>
 							<td class="text-c tbcolor pt13">원자재 비</td>
-							<td><input id="giWonjaje" name="giWonjaje" class="form-control" style="width: 160px;"
-								<fmt:formatNumber value="${giWonjaje}" pattern="#,###,###"/>> </td>
-							<td><input id="wonjaje" name="wonjaje" class="form-control" style="width: 160px;" readonly="readonly"
-								<fmt:formatNumber value="${wonjaje}" pattern="#,###,###"/>> </td>
+							<td><input id="giWonjaje" name="giWonjaje" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;"
+								value="${giWonjaje}" > </td>
+							<td><input id="wonjaje" name="wonjaje" class="form-control text-l" style="width: 160px; text-align:right; padding-right: 30px;"
+								value="${wonjaje}" readonly="readonly" >  </td>
 						</tr>
 						<tr>
 							<td class="text-c tbcolor pt13">부자재 비</td>
-							<td><input id="giBujaje" name="giBujaje" class="form-control" style="width: 160px;" 
+							<td><input id="giBujaje" name="giBujaje" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
 								value="${giBujaje }"></td>
-							<td><input id="bujaje" name="bujaje" class="form-control" style="width: 160px;" 
+							<td><input id="bujaje" name="bujaje" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
 								value="${bujaje }" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td class="text-c tbcolor pt13">임봉료 비</td>
-							<td><input id="giImbong" name="giImbong" class="form-control" style="width: 160px;" 
+							<td><input id="giImbong" name="giImbong" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
 								value="${giImbong }"></td>
-							<td><input id="imbong" name="imbong" class="form-control" style="width: 160px;" 
+							<td><input id="imbong" name="imbong" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
 								value="${imbong }" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td class="text-c tbcolor pt13">원가 합계</td>
-							<td><input id="giWon" name="giWon" class="form-control" style="width: 160px;"
+							<td><input id="giWon" name="giWon" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;"
 								value="${giWon }" readonly="readonly"></td>
-							<td><input id="won" name="won" class="form-control" style="width: 160px;" 
+							<td><input id="won" name="won" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
 								value="${won }" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td class="text-c tbcolor pt13">소비자가</td>
-							<td><input id="giSobi" name="giSobi" class="form-control" style="width: 160px;" 
-								value="${giSobi }"></td>
-							<td><input id="sobi" name="sobi" class="form-control" style="width: 160px;" 
-								value="${sobi }" readonly="readonly"></td>
+							<td><input id="giSobi" name="giSobi" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
+							    value="${giSobi}"> </td>
+							<td><input id="sobi" name="sobi" class="form-control" style="width: 160px; text-align:right; padding-right: 30px;" 
+								value="${sobi}" readonly="readonly"> </td>
 						</tr>
 					</tbody>
 				</table>

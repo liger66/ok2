@@ -266,28 +266,109 @@ public class JepumServiceImpl implements JepumService {
 		lGroup.setlGroupCd(iBrand);		
 		LGroupCd lGroupCd = lGroupCdDao.selectOne(lGroup);		
 		
-		if (lGroupCd != null) { resultMap.put("brandNm", lGroupCd.getlGroupNm());	}
+		if (lGroupCd == null) { 
+			resultMap.put("msg", "제품 1번째자리, 해당하는 브랜드가 없습니다.");	
+		} else {
+			resultMap.put("brandNm", lGroupCd.getlGroupNm());	
+		}
 		
 		lGroup.setGubunCd("GIYY");
 		lGroup.setlGroupCd(iGiYY);		
 		lGroupCd = lGroupCdDao.selectOne(lGroup);
-		
-		if (lGroupCd != null) { resultMap.put("giYYNm", lGroupCd.getlGroupNm());	}
+		if (lGroupCd == null) { 
+			resultMap.put("msg", "제품 2번째자리, 해당하는 기획년도가 없습니다.");	
+		} else {
+			resultMap.put("giYYNm", lGroupCd.getlGroupNm());	
+		}
 		
 		lGroup.setGubunCd("SEASON");
 		lGroup.setlGroupCd(iSeason);		
 		lGroupCd = lGroupCdDao.selectOne(lGroup);		
-		
-		if (lGroupCd != null) { resultMap.put("seasonNm", lGroupCd.getlGroupNm()); }
+		if (lGroupCd == null) { 
+			resultMap.put("msg", "제품 3번째자리, 해당하는 시즌코드가 없습니다.");	
+		} else {
+			resultMap.put("seasonNm", lGroupCd.getlGroupNm());	
+		}
 		
 		Pumjong pum = new Pumjong();
 		pum.setPumCd(iPum);		
 		Pumjong pumjong = pumjongDao.selectOne(pum);
+		if (pumjong == null) { 
+			resultMap.put("msg", "제품 4번째자리, 해당하는 품종코가 없습니다.");	
+		} else {
+			resultMap.put("pumNm", pumjong.getPumNm());
+		}
 		
-		if (pumjong != null) { resultMap.put("pumNm", pumjong.getPumNm());	}	
-				
+		resultMap.put("sBrand", iBrand);
+		resultMap.put("sGiYY", iGiYY);
+		resultMap.put("sSeason", iSeason);
+		resultMap.put("sPum", iPum);
+		
 		resultMap.put("errorYN", "N");
 		resultMap.put("jepum", jepum);	
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> getJepumDetl(Jepum jepum) {
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		LGroupCd lgCd = new LGroupCd();
+		lgCd.setGubunCd("BRAND");
+		lgCd.setlGroupCd(jepum.getBrand());
+		LGroupCd lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("brandNm", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("SEASON");
+		lgCd.setlGroupCd(jepum.getSeason());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("seasonNm", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("GIYY");
+		lgCd.setlGroupCd(jepum.getGiYY());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("giYYNm", lgroupCd.getlGroupNm());
+		
+		Pumjong pum = new Pumjong();
+		pum.setPumCd(jepum.getPum());
+		Pumjong pumjong = codeService.selectPumjongOne(pum);
+		resultMap.put("pumNm", pumjong.getPumNm());
+		
+		lgCd.setGubunCd("JEPUMG");
+		lgCd.setlGroupCd(jepum.getJepumGb());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("jepumGb", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("GIG");
+		lgCd.setlGroupCd(jepum.getGiGb());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("giGb", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("MAJING");
+		lgCd.setlGroupCd(jepum.getMajinGb());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("majinGb", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("SOJEG");
+		lgCd.setlGroupCd(jepum.getSojeGb());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("sojeGb", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("PRICEG");
+		lgCd.setlGroupCd(jepum.getPriceGb());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("priceGb", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("SIZEG");
+		lgCd.setlGroupCd(jepum.getSizGroup());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("sizGroup", lgroupCd.getlGroupNm());
+		
+		lgCd.setGubunCd("SENGH");
+		lgCd.setlGroupCd(jepum.getSengHt());
+		lgroupCd = codeService.selectLGroupOne(lgCd);
+		resultMap.put("sengHt", lgroupCd.getlGroupNm());
 		
 		return resultMap;
 	}

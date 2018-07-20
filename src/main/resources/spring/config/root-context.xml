@@ -7,6 +7,15 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
 	<context:property-placeholder location="classpath:mybatis/config/db.properties"/>
+	<bean id="sengJiService" class="com.tiger.service.SengJiServiceImpl">
+		<property name="jepumDao" ref="jepumDao"/>
+		<property name="lGroupCdDao" ref="lGroupCdDao"/>
+		<property name="jepumColorDao" ref="jepumColorDao"/>
+		<property name="jepumSizDao" ref="jepumSizDao"/>
+		<property name="sengJisiDao" ref="sengJisiDao"/>
+		<property name="codeService" ref="codeService"/>
+		<property name="jepumService" ref="jepumService"/>
+	</bean>	
 	
 	<bean id="jepumService" class="com.tiger.service.JepumServiceImpl">
 		<property name="jepumDao" ref="jepumDao"/>
@@ -26,6 +35,15 @@
 		<property name="pumjongDao" ref="pumjongDao"/>
 	</bean>	
 	
+	<bean id="jepumColorDao" class="com.tiger.dao.JepumColorDao">
+		<property name="session" ref="session"/>
+	</bean>
+	<bean id="jepumSizDao" class="com.tiger.dao.JepumSizDao">
+		<property name="session" ref="session"/>
+	</bean>
+	<bean id="sengJisiDao" class="com.tiger.dao.SengJisiDao">
+		<property name="session" ref="session"/>
+	</bean>
 	<bean id="jepumDao" class="com.tiger.dao.JepumDao">
 		<property name="session" ref="session"/>
 	</bean>
