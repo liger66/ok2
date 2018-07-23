@@ -37,7 +37,8 @@
 				type : "POST",
 				data : {jepum : jepum},
 				success : function(data) {
-					if (data.errorYN == "Y") { alert (data.msg); }
+					if (data.errorYN == "Y") { alert (data.msg); return; }
+					
 					$("#brandNm").val(data.brandNm);
 					$("#giYYNm").val(data.giYYNm);
 					$("#seasonNm").val(data.seasonNm);

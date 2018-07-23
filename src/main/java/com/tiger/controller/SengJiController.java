@@ -1,10 +1,17 @@
 package com.tiger.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tiger.service.CodeService;
 import com.tiger.service.JepumService;
@@ -40,5 +47,18 @@ public class SengJiController {
 		model.addAttribute("tUser", tUser);
 		
 		return "/sengJi.jsp";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sengJi/jepumIn", method=RequestMethod.POST, produces="text/plain; charset=utf-8" )
+	public Map<String, Object> checkData(@RequestParam(required=false) String jepum ) {
+		System.out.println("in  jepumin -----------");
+		jepum = jepum.toUpperCase();
+		
+		Map<String, Object>  resultMap = new HashMap<>();
+		resultMap = sengJiService.jepumIn(jepum);
+		
+		
+		return resultMap;
 	}
 }

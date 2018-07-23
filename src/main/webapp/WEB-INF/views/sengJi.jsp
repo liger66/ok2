@@ -28,33 +28,27 @@
 		form.submit();
 	}
 	
-	function jepumChange() {
+	function jepumIn() {
 		var jepum  = $("#jepum").val();
-		var tx1 = "<option value='";
-		var tx2 = "'>";
-		var tx3 = "</option>";
-		$.ajax({url : "/jepum/change",
+		var tx1 = "<th class='text-c col-sm-1 tbcolor'>sz";
+		var tx2 = "</th>";
+		var txall = "";
+		$.ajax({url : "/sengJi/jepumIn",
 				type : "POST",
 				data : {jepum : jepum},
 				success : function(data) {
-					if (data.errorYN == "Y") { alert (data.msg); }
+					if (data.errorYN == "Y") { alert (data.msg); return;}
+					
 					$("#brandNm").val(data.brandNm);
 					$("#giYYNm").val(data.giYYNm);
 					$("#seasonNm").val(data.seasonNm);
-					$("#pumNm").val(data.pumNm);
+					$("#jepumNm").val(data.jepumNm);					
+					$("#sizList").val(data.sizList);					
 					
-					var txall = tx1 + data.sBrand + tx2 + data.brandNm + tx3;
-					$("#sBrand").append(txall);
-					
-					txall = tx1 + data.sGiYY + tx2 + data.giYYNm + tx3;
-					$("#sGiYY").append(txall);
-					
-					txall = tx1 + data.sSeason + tx2 + data.seasonNm + tx3;
-					$("#sSeason").append(txall);
-					
-					txall = tx1 + data.sPum + tx2 + data.pumNm + tx3;
-					$("#sPumjong").append(txall);
-					
+					for (var i = 0; i < data.siz.size(); i++) {
+						txall = tx1 + i + tx;
+						$("#tHead").append(txall);
+					}					
 					return;
 			},
 			error : function(err) {
@@ -277,14 +271,20 @@
 		<div class="form-group col-sm-4">
 			<div class="form-group form-inline ">
 				<label class="col-sm-6 hlabel">제품 코드</label>
-				<input name="jepum" id="jepum" class="form-control iup" onchange="jepumChange()"
-					   value="${jepum.jepum }" style="width:120px; font-weight:bold;">
-				<input type="hidden" name="hJepum" value="${hJepum}" >
+				<input type="hidden" name="hJepum" value="${hJepum}" >			
+				<div class="input-group">
+			         <input id="jepum" name="jepum" class="form-control iup" 
+					   value="${sengJisi.jepum}" style="width:80px;"> &nbsp;
+			         <div class="input-group-btn">
+			            <button class="btn btn-warning" type="submit" onclick="jepumIn()">
+			            	<i class="glyphicon glyphicon-ok"></i></button>
+			    	 </div> 
+	    		</div>
 			</div>
 		</div>
 		<div class="form-group col-sm-8">
 			<div class="form-group form-inline ">
-				<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" 
+				<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" readonly="readonly"
 					   name="jepumNm" class="form-control" style="width: 300px;">
 			</div>
 		</div>
@@ -368,7 +368,7 @@
 			<thead>
 				<tr id="tHead">
 					<th class="text-c col-sm-1 tbcolor">칼라</th>
-					<th class="text-c col-sm-2 tbcolor">Image</th>
+					<th class="text-c col-sm-1 tbcolor">Image</th>
 				</tr>
 			</thead>
 
@@ -381,7 +381,12 @@
 						</c:forEach>
 						</select>
 					</td>
-					<td><input type="file" name="fileNm1"></td>
+					<td><input type="file" id="fileNm1" name="fileNm1"></td>
+					<td>
+						<c:forEach var="ms" items="${sizList }">
+							<input value="${ms.siz1}" id="siz1" name="siz1">
+						</c:forEach>											
+					</td>					
 				</tr>
 				<tr id="tBody2">
 					<td>
@@ -390,8 +395,12 @@
 							<option value="${mc.lGroupCd}">${mc.lGroupNm}</option>
 						</c:forEach>
 						</select>
+					<td><input type="file" id="fileNm2" name="fileNm2"></td>
+					<td>
+						<c:forEach var="ms" items="${sizList }">
+							<input value="${ms.siz2}" id="siz2" name="siz2">
+						</c:forEach>											
 					</td>
-					<td><input type="file" name="fileNm2"></td>
 				</tr>
 				
 			</tbody>

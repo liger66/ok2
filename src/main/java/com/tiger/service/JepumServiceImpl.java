@@ -251,10 +251,10 @@ public class JepumServiceImpl implements JepumService {
 	@Override
 	public Map<String, Object> jepumChange(Jepum jepum) {
 		Map<String, Object>  resultMap = new HashMap<>();
-		resultMap.put("errorYN", "Y");
+		resultMap.put("errorYN", "N");
 		
 		String iJepum = jepum.getJepum();
-		System.out.println("jepum : " + iJepum);
+		System.out.println("impl change jepum : " + iJepum);
 		
 		String iBrand = iJepum.substring(0,1);
 		String iGiYY = iJepum.substring(1,2);
@@ -267,7 +267,8 @@ public class JepumServiceImpl implements JepumService {
 		LGroupCd lGroupCd = lGroupCdDao.selectOne(lGroup);		
 		
 		if (lGroupCd == null) { 
-			resultMap.put("msg", "제품 1번째자리, 해당하는 브랜드가 없습니다.");	
+			resultMap.put("msg", "제품 1번째자리, 해당하는 브랜드가 없습니다.");
+			resultMap.put("errorYN", "Y");
 		} else {
 			resultMap.put("brandNm", lGroupCd.getlGroupNm());	
 		}
@@ -276,7 +277,8 @@ public class JepumServiceImpl implements JepumService {
 		lGroup.setlGroupCd(iGiYY);		
 		lGroupCd = lGroupCdDao.selectOne(lGroup);
 		if (lGroupCd == null) { 
-			resultMap.put("msg", "제품 2번째자리, 해당하는 기획년도가 없습니다.");	
+			resultMap.put("msg", "제품 2번째자리, 해당하는 기획년도가 없습니다.");
+			resultMap.put("errorYN", "Y");
 		} else {
 			resultMap.put("giYYNm", lGroupCd.getlGroupNm());	
 		}
@@ -285,7 +287,8 @@ public class JepumServiceImpl implements JepumService {
 		lGroup.setlGroupCd(iSeason);		
 		lGroupCd = lGroupCdDao.selectOne(lGroup);		
 		if (lGroupCd == null) { 
-			resultMap.put("msg", "제품 3번째자리, 해당하는 시즌코드가 없습니다.");	
+			resultMap.put("msg", "제품 3번째자리, 해당하는 시즌코드가 없습니다.");
+			resultMap.put("errorYN", "Y");
 		} else {
 			resultMap.put("seasonNm", lGroupCd.getlGroupNm());	
 		}
@@ -294,7 +297,8 @@ public class JepumServiceImpl implements JepumService {
 		pum.setPumCd(iPum);		
 		Pumjong pumjong = pumjongDao.selectOne(pum);
 		if (pumjong == null) { 
-			resultMap.put("msg", "제품 4번째자리, 해당하는 품종코가 없습니다.");	
+			resultMap.put("msg", "제품 4번째자리, 해당하는 품종코가 없습니다.");
+			resultMap.put("errorYN", "Y");
 		} else {
 			resultMap.put("pumNm", pumjong.getPumNm());
 		}
@@ -304,7 +308,6 @@ public class JepumServiceImpl implements JepumService {
 		resultMap.put("sSeason", iSeason);
 		resultMap.put("sPum", iPum);
 		
-		resultMap.put("errorYN", "N");
 		resultMap.put("jepum", jepum);	
 		
 		return resultMap;
