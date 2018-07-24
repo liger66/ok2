@@ -29,6 +29,16 @@
 		<property name="codeService" ref="codeService"/>
 	</bean>	
 	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/comment/**"/>
+			<mvc:mapping path="/photo/**"/>
+			<mvc:mapping path="/admin/**"/>
+			<ref bean="loginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>	
+	<bean id="loginInterceptor" class="interceptor.LoginInterceptor"/>
+	
 	<mvc:annotation-driven/>
 	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
 	<mvc:resources mapping="/sysimg/**" location="/WEB-INF/resources/sysimg/" /> 

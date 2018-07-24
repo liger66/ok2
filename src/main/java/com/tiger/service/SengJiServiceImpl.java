@@ -45,28 +45,34 @@ public class SengJiServiceImpl  implements SengJiService {
 	}
 	
 	private JepumService  jepumService;
-	public void setJepumService (JepumService sengJiService) {
+	public void setJepumService (JepumService jepumService) {
 		this.jepumService = jepumService;
 	}
+	
 	@Override
 	public Map<String, Object> jepumIn(String jep) {
+		
 		Map<String, Object>  resultMap = new HashMap<>();
 		Jepum jepum = new Jepum();
 		jepum.setJepum(jep);
 		
 		Jepum  jepum2 = jepumDao.selectOne(jepum);
+		
 		if (jepum2 == null) {
 			resultMap.put("errorYN", "Y");			
-			resultMap.put("msg", "제품코드 정보가 앖습니다.");	
+			resultMap.put("msg", "제품코드 정보가 없습니다.");	
 			return resultMap;
 		}
+		
 		resultMap = jepumService.getJepumDetl(jepum2);
 		resultMap.put("jepum", jepum2);
 		
-		List<MGroupCd> mGroupCdList =  codeService.selectMGroupCdList("SIZ", jepum2.getSizGroup());
+		List<MGroupCd> mGroupCdList =  codeService.selectMGroupCdList("SIZEG", jepum2.getSizGroup());
 		resultMap.put("sizList", mGroupCdList);
+		resultMap.put("sizList1", mGroupCdList);
+		resultMap.put("sizList2", mGroupCdList);
 		resultMap.put("errorYN", "N");
 		
-		return resultMap;
+		return resultMap;		
 	}
 }

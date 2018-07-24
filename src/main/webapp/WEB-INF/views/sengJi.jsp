@@ -30,7 +30,7 @@
 	
 	function jepumIn() {
 		var jepum  = $("#jepum").val();
-		var tx1 = "<th class='text-c col-sm-1 tbcolor'>sz";
+		var tx1 = "<th class='text-c col-sm-1 tbcolor'>";
 		var tx2 = "</th>";
 		var txall = "";
 		$.ajax({url : "/sengJi/jepumIn",
@@ -43,10 +43,15 @@
 					$("#giYYNm").val(data.giYYNm);
 					$("#seasonNm").val(data.seasonNm);
 					$("#jepumNm").val(data.jepumNm);					
-					$("#sizList").val(data.sizList);					
+					$("#sizList").val(data.sizList);
 					
-					for (var i = 0; i < data.siz.size(); i++) {
-						txall = tx1 + i + tx;
+					alert ("size length : " + data.sizList.length);
+					
+					$("#tHead").empty();
+					$("#tHead").append("<th class='text-c col-sm-1 tbcolor'>칼라</th>");
+					$("#tHead").append("<th class='text-c col-sm-1 tbcolor'>Image</th>");
+					for (var i = 0; i < data.sizList.length; i++) {
+						txall = tx1 + data.sizList[i].mGroupCd + tx2;
 						$("#tHead").append(txall);
 					}					
 					return;
@@ -65,7 +70,7 @@
 			url : "/sengJi/selectJepum",
 			type : "POST",
 			data : {sJepum : sJepum},
-			success : function(data) {		
+			success : function(data) {
 				$("#jepum").val(data.jepum.jepum);
 				$("#jepumNm").val(data.jepum.jepumNm);
 				$("#saipPanYN").val(data.jepum.saipPanYN);
@@ -266,7 +271,7 @@
 </div>
 
 <div class="container col-sm-9">
-<form id="mainform" action="${pageContext.request.contextPath}/jepum/insert" method="post" >
+<form id="mainform" action="${pageContext.request.contextPath}/sengJi/insert" method="post" >
 	<div class="row">  
 		<div class="form-group col-sm-4">
 			<div class="form-group form-inline ">
@@ -276,7 +281,7 @@
 			         <input id="jepum" name="jepum" class="form-control iup" 
 					   value="${sengJisi.jepum}" style="width:80px;"> &nbsp;
 			         <div class="input-group-btn">
-			            <button class="btn btn-warning" type="submit" onclick="jepumIn()">
+			            <button class="btn btn-warning" type="button" onclick="jepumIn()">
 			            	<i class="glyphicon glyphicon-ok"></i></button>
 			    	 </div> 
 	    		</div>
@@ -284,8 +289,9 @@
 		</div>
 		<div class="form-group col-sm-8">
 			<div class="form-group form-inline ">
-				<label class="col-sm-3 hlabel">제품 명</label> <input id="jepumNm" readonly="readonly"
-					   name="jepumNm" class="form-control" style="width: 300px;">
+				<label class="col-sm-3 hlabel">제품 명</label> 
+				<input id="jepumNm" name="jepumNm" readonly="readonly" 
+					   value="${jepumNm}" class="form-control" style="width: 300px;">
 			</div>
 		</div>
 	</div>
@@ -383,8 +389,8 @@
 					</td>
 					<td><input type="file" id="fileNm1" name="fileNm1"></td>
 					<td>
-						<c:forEach var="ms" items="${sizList }">
-							<input value="${ms.siz1}" id="siz1" name="siz1">
+						<c:forEach var="ms" items="${sizList1 }">
+							<input value="${ms.mGroupCd}" id="siz1" name="siz1">
 						</c:forEach>											
 					</td>					
 				</tr>
@@ -397,8 +403,8 @@
 						</select>
 					<td><input type="file" id="fileNm2" name="fileNm2"></td>
 					<td>
-						<c:forEach var="ms" items="${sizList }">
-							<input value="${ms.siz2}" id="siz2" name="siz2">
+						<c:forEach var="ms" items="${sizList2 }">
+							<input value="${ms.mGroupCd}" id="siz2" name="siz2">
 						</c:forEach>											
 					</td>
 				</tr>

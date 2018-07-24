@@ -43,22 +43,22 @@ public class SengJiController {
 			System.out.println("no login ----------->");
 			return "L";
 		}
-		
+		model = jepumService.getSerchHead(model);		
 		model.addAttribute("tUser", tUser);
+		model.addAttribute("jepum", new Jepum());
 		
 		return "/sengJi.jsp";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/sengJi/jepumIn", method=RequestMethod.POST, produces="text/plain; charset=utf-8" )
-	public Map<String, Object> checkData(@RequestParam(required=false) String jepum ) {
-		System.out.println("in  jepumin -----------");
-		jepum = jepum.toUpperCase();
+	@RequestMapping(value="/sengJi/jepumIn", method=RequestMethod.POST, produces="application/json; charset=utf-8" )
+	public Map<String, Object> jepumIn(@RequestParam(required=false) String jepum ) {
 		
+		jepum = jepum.toUpperCase();
+		System.out.println("in  jepumin -----------" + jepum);
 		Map<String, Object>  resultMap = new HashMap<>();
 		resultMap = sengJiService.jepumIn(jepum);
-		
-		
+		System.out.println("jepumin before return-----------" + jepum);
 		return resultMap;
 	}
 }

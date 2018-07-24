@@ -55,7 +55,6 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (jepum2 != null) {					
 			resultMap.put("msg", "제품코드가 이미 존재 합니다.");
-			System.out.println("error  jepum------------ ");
 			return resultMap;
 		}	
 		
@@ -66,7 +65,6 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (lGroupCd == null) {
 			resultMap.put("msg", "제품코드 처음 1자리는 브랜드코드를 입력 합니다.");	
-			System.out.println("error  brand------------ ");
 			return resultMap;
 		} else { resultMap.put("brandNm", lGroupCd.getlGroupNm());	}
 		
@@ -76,7 +74,6 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (lGroupCd == null) {
 			resultMap.put("msg", "제품코드 2번째 자리는 기획년도를 입력 합니다.");
-			System.out.println("error  giyy------------ ");
 			return resultMap;
 		} else { resultMap.put("giYYNm", lGroupCd.getlGroupNm());	}
 		
@@ -86,7 +83,6 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (lGroupCd == null) {
 			resultMap.put("msg", "제품코드 3번째 자리는  시즌코드를 입력 합니다.");
-			System.out.println("error  season------------ ");
 			return resultMap;
 		}	else { resultMap.put("seasonNm", lGroupCd.getlGroupNm());}
 		
@@ -96,7 +92,6 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (pumjong == null) {					
 			resultMap.put("msg", "제품코드 4번째 자리는  품종코드를 입력 합니다.");
-			System.out.println("error  pumjong------------ ");
 			return resultMap;
 		} 	else { resultMap.put("pumNm", pumjong.getPumNm());	}
 		
@@ -113,12 +108,10 @@ public class JepumServiceImpl implements JepumService {
 		
 		if (won == 0) {
 			resultMap.put("msg", "원가 항목에 입력 하세요.");
-			System.out.println("error  won------------ ");
 			return resultMap;
 		}
 		if (jepum.getGiSobi() == 0) {
 			resultMap.put("msg", "소비자가를 입력 하세요.");
-			System.out.println("error  sobi------------ ");
 			return resultMap;
 		}
 		

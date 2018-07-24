@@ -41,9 +41,7 @@ public class JepumController {
 			return "L";
 		}
 		
-		Model mod = jepumService.getSerchHead(model);
-		model = mod;
-		
+		model = jepumService.getSerchHead(model);		
 		model.addAttribute("tUser", tUser);
 		model.addAttribute("jepum", new Jepum());
 		
@@ -54,12 +52,8 @@ public class JepumController {
 	public String mnew(@ModelAttribute Jepum jepum, Model model) throws ParseException {
 		model.addAttribute("mnew", true);
 		
-		Model mod = jepumService.getMainHead(model);
-		model = mod;
-		
-		Jepum jep = jepumService.getMainHead2(jepum);
-		
-		jepum = jep;
+		model = jepumService.getMainHead(model);		
+		jepum = jepumService.getMainHead2(jepum);
 				
 		return "/jepum.jsp";
 	}
@@ -79,7 +73,7 @@ public class JepumController {
 	@ResponseBody
 	@RequestMapping(value="/jepum/checkData", method=RequestMethod.POST, produces="text/plain; charset=utf-8" )
 	public String checkData(@ModelAttribute Jepum jepum) {
-		System.out.println("in  check data -----------");
+		
 		jepum.setJepum(jepum.getJepum().toUpperCase());
 		
 		Map<String, Object>  resultMap = new HashMap<>();
@@ -128,8 +122,7 @@ public class JepumController {
 		
 		jepumService.insert(jepum);
 		
-		Model mod = jepumService.getSerchHead(model);
-		model = mod;
+		model = jepumService.getSerchHead(model);
 		
 		//return "/jepum.jsp";				
 		//return "redirect:/jepum/list";
@@ -143,10 +136,6 @@ public class JepumController {
 			   			 @RequestParam(required=false) String sGiYY,
 			   			 @RequestParam(required=false) String sSeason,
 			   			 @RequestParam(required=false) String sPumjong) {
-		System.out.println("brand : " + sBrand);
-		System.out.println("giyy  : " + sGiYY);
-		System.out.println("season : " + sSeason);
-		System.out.println("pumjong : " + sPumjong);
 		
 		Jepum jep = new Jepum();
 		jep.setBrand(sBrand);
@@ -158,9 +147,7 @@ public class JepumController {
 			
 		model.addAttribute("sJepumList", jepumList);
 		
-		Model mod = jepumService.getSerchHead(model);
-		model = mod;
-		
+		model = jepumService.getSerchHead(model);		
 		model.addAttribute("jepum", new Jepum());
 				
 		System.out.println("list length : " + jepumList.size());
