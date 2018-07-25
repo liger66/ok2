@@ -12,7 +12,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("tUser") == null) {
+		if(session.getAttribute("tuser") == null) {
 			//로그인x
 			request.setAttribute("msg", "로그인 후 이용 가능합니다.");
 			request.setAttribute("url", "/main");

@@ -68,14 +68,15 @@ function check (f) {
 			<div class="form-group text-right">
 				<label class="col-sm-offset-2 col-xs-3 control-label" for="pass">패스워드</label>
 				<div class="col-sm-3">
-					<input type="password" id="pass" name="pass" class="form-control" />
+					<input type="password" id="pass" name="pass" class="form-control"
+					       onkeypress="if(event.keyCode==13) {check(this.form);}">
 				</div>
 			</div>
 			<br /><br /> <br /><br />
 			<div class="text-center">
 				<button type="button" class="btn btn-success btn-lg" onclick="check(this.form)">Login</button>
 				<button type="button" class="btn btn-warning btn-lg"
-					onclick="location.href='${pageContext.request.contextPath}/hello2'">취소</button>
+					onclick="location.href='/hello'">취소</button>
 			</div>
 
 		</div>

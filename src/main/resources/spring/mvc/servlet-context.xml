@@ -31,9 +31,9 @@
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/comment/**"/>
-			<mvc:mapping path="/photo/**"/>
-			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/code/in"/>
+			<mvc:mapping path="/jepum/**"/>
+			<mvc:mapping path="/sengJi/**"/>
 			<ref bean="loginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>	
